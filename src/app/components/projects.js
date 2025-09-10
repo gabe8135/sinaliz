@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-// ...existing code...
+import Button from "./ui/Button";
+import ContactButton from "./ui/ContactButton";
 
 export default function Projects() {
   // Estado para controlar quais cards estão com tecnologias expandidas
@@ -153,36 +154,29 @@ export default function Projects() {
     },
     {
       id: 4,
-      title: "Sistema de Gestão",
-      category: "fullstack",
+      title: "Site Institucional",
+      category: "frontend",
       description:
-        "Sistema completo de gestão empresarial com controle de estoque, vendas, clientes e relatórios financeiros.",
-      longDescription:
-        "Aplicação web completa para gestão empresarial, desenvolvida com arquitetura moderna. Inclui autenticação segura, dashboard interativo, sistema de permissões e integração com APIs de pagamento.",
+        "Projeto iniciado recentemente. Em breve este card terá detalhes do site institucional desenvolvido!",
+      longDescription: "Projeto em fase inicial. Em breve mais informações e links reais.",
       image: "/api/placeholder/600/400",
-      technologies: ["Next.js", "Node.js", "Supabase", "TypeScript", "Stripe"],
-      links: {
-        live: "https://sistema-gestao-demo.com",
-        github: "https://github.com/gabrielramos/sistema-gestao",
-      },
-      featured: true,
-      status: "Concluído",
+      technologies: ["Em breve"],
+      links: {},
+      featured: false,
+      status: "Em breve",
     },
     {
       id: 6,
-      title: "API RESTful",
-      category: "backend",
+      title: "Loja Online",
+      category: "fullstack",
       description:
-        "API robusta e escalável para aplicações web, com documentação completa e testes automatizados.",
-      longDescription:
-        "API desenvolvida seguindo as melhores práticas de desenvolvimento backend, incluindo autenticação JWT, validação de dados, tratamento de erros e documentação com Swagger.",
+        "Projeto de loja online iniciado recentemente. Em breve este card terá detalhes e links reais!",
+      longDescription: "Projeto em fase inicial. Em breve mais informações e links reais.",
       image: "/api/placeholder/600/400",
-      technologies: ["Node.js", "Express", "PostgreSQL", "JWT", "Swagger"],
-      links: {
-        github: "https://github.com/gabrielramos/api-restful",
-      },
+      technologies: ["Em breve"],
+      links: {},
       featured: false,
-      status: "Concluído",
+      status: "Em breve",
     },
   ];
 

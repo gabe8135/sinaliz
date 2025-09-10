@@ -87,8 +87,8 @@ export default function Footer() {
     let height = 0;
     let mouseX = width / 2;
     let mouseY = height / 2;
-  // Variáveis de interação do canvas (não usadas, removidas para evitar warnings)
-  const RADIUS = 70;
+    // Variáveis de interação do canvas (não usadas, removidas para evitar warnings)
+    const RADIUS = 70;
     const QUANTITY = 18;
     const palette = ["#3b82f6", "#a855f7", "#6366f1", "#818cf8", "#c7d2fe", "#f3f4f6"];
     let particles = [];
@@ -144,19 +144,15 @@ export default function Footer() {
       mouseX = e.clientX;
       mouseY = e.clientY - (window.innerHeight - height); // ajusta para o footer
     }
-  // ...existing code...
+    // ...existing code...
 
     window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("mousedown", mouseDown);
-    window.addEventListener("mouseup", mouseUp);
     window.addEventListener("resize", resize);
     resize();
     createParticles();
     loop();
     return () => {
       window.removeEventListener("mousemove", mouseMove);
-      window.removeEventListener("mousedown", mouseDown);
-      window.removeEventListener("mouseup", mouseUp);
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(frame);
     };

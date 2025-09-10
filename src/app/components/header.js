@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-// ...existing code...
+import ContactButton from "./ui/ContactButton";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

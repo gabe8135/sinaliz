@@ -1,4 +1,5 @@
 "use client";
+import Button from "./ui/Button";
 import { useState, useEffect, useRef } from "react";
 // ...existing code...
 
@@ -85,7 +86,7 @@ export default function Contact() {
         setSubmitStatus("error");
       }
       setShowModal(true);
-  } catch {
+    } catch {
       setSubmitStatus("error");
       setShowModal(true);
     } finally {

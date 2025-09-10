@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-// ...existing code...
+import Button from "./ui/Button";
+import ContactButton from "./ui/ContactButton";
 
 export default function Hero() {
   const canvasRef = useRef(null);
