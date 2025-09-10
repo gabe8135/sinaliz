@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Button from "./ui/Button";
+// ...existing code...
 
 export default function Contact() {
   // Estados para controle de formulário e animações
@@ -85,7 +85,7 @@ export default function Contact() {
         setSubmitStatus("error");
       }
       setShowModal(true);
-    } catch (error) {
+  } catch {
       setSubmitStatus("error");
       setShowModal(true);
     } finally {

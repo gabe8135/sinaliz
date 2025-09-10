@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Button from "./ui/Button";
-import ContactButton from "./ui/ContactButton";
+// ...existing code...
 
 export default function Projects() {
   // Estado para controlar quais cards estão com tecnologias expandidas
@@ -48,10 +47,10 @@ export default function Projects() {
       technologies: [
         "Next.js",
         "React",
+        "Radix UI",
         "Supabase",
         "PostgreSQL",
         "Tailwind CSS",
-        "Radix UI",
         "Swiper",
         "Vercel",
         "Webpack",
@@ -79,8 +78,8 @@ export default function Projects() {
       technologies: [
         "Next.js",
         "React",
-        "Supabase",
         "PostgreSQL",
+        "Supabase",
         "Tailwind CSS",
         "Radix UI",
         "Font Awesome",
@@ -97,8 +96,36 @@ export default function Projects() {
       status: "Concluído",
     },
     {
+      id: 7,
+      title: "Geomind",
+      category: "fullstack",
+      description:
+        "Site empresarial moderno para a Geomind, com animações, performance e recursos avançados.",
+      longDescription:
+        "O site institucional da Geomind foi desenvolvido com Next.js 15.4.4, React, Tailwind CSS, Framer Motion e Vercel. Conta com recursos de PWA, Open Graph, Webpack, HSTS, Priority Hints e foco em performance e segurança.",
+      image: "/images/projects/geomind.webp",
+      technologies: [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Webpack",
+        "PWA",
+        "Open Graph",
+        "Vercel",
+        "HSTS",
+        "Priority Hints",
+      ],
+      links: {
+        live: "https://geomind.com.br",
+        github: "https://github.com/gabe8135/Geomind-Website",
+      },
+      featured: false,
+      status: "Concluído",
+    },
+    {
       id: 3,
-      title: "Landing Page Responsiva",
+      title: "Landing Page",
       category: "frontend",
       description:
         "Landing page moderna e otimizada para conversão, com animações suaves e design responsivo para empresa de tecnologia.",
@@ -139,22 +166,6 @@ export default function Projects() {
         github: "https://github.com/gabrielramos/sistema-gestao",
       },
       featured: true,
-      status: "Concluído",
-    },
-    {
-      id: 5,
-      title: "App Mobile Clone",
-      category: "mobile",
-      description:
-        "Clone responsivo de aplicativo popular, focado em UX/UI moderno e funcionalidades interativas.",
-      longDescription:
-        "Projeto de estudos replicando funcionalidades de apps populares, com foco em componentes reutilizáveis e state management eficiente.",
-      image: "/api/placeholder/600/400",
-      technologies: ["React Native", "Expo", "Redux", "Styled Components"],
-      links: {
-        github: "https://github.com/gabrielramos/mobile-clone",
-      },
-      featured: false,
       status: "Concluído",
     },
     {
@@ -238,7 +249,7 @@ export default function Projects() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 bg-white ${
+              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               } min-w-0`}
               style={{
@@ -255,7 +266,7 @@ export default function Projects() {
               )}
 
               {/* Imagem do projeto ou placeholder */}
-              <div className="relative h-48 bg-gradient-to-br from-blue-800 via-purple-800 to-indigo-800 flex items-center justify-center overflow-hidden">
+              <div className="relative h-48 bg-white flex items-center justify-center overflow-hidden">
                 {project.image && project.image !== "/api/placeholder/600/400" ? (
                   <img
                     src={project.image}
@@ -263,7 +274,7 @@ export default function Projects() {
                     className="object-cover h-full w-full"
                   />
                 ) : (
-                  <div className="text-white text-center">
+                  <div className="text-purple-400 text-center">
                     <svg
                       className="w-16 h-16 mx-auto mb-2 opacity-80"
                       fill="currentColor"
@@ -290,11 +301,11 @@ export default function Projects() {
 
               {/* Conteúdo do card estilizado */}
               <div className="p-8 flex flex-col h-full">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3 drop-shadow-lg">
+                <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-lg">
                   {project.title}
                 </h3>
 
-                <p className="text-gray-700 mb-5 line-clamp-3 text-base">{project.description}</p>
+                <p className="text-white/90 mb-5 line-clamp-3 text-base">{project.description}</p>
 
                 {/* Stack de tecnologias */}
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -304,7 +315,7 @@ export default function Projects() {
                   ).map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-gradient-to-r from-blue-50 via-purple-50 to-white text-gray-800 text-sm rounded-full font-semibold shadow border border-gray-100"
+                      className="px-3 py-1 bg-gradient-to-r from-blue-50 to-purple-50 text-gray-800 text-sm rounded-full font-semibold shadow border border-gray-100"
                     >
                       {tech}
                     </span>

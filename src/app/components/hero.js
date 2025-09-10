@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Button from "./ui/Button";
-import ContactButton from "./ui/ContactButton";
+// ...existing code...
 
 export default function Hero() {
   const canvasRef = useRef(null);
@@ -9,12 +8,7 @@ export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
   const parallaxRef = useRef(null);
   const [parallaxY, setParallaxY] = useState(0);
-  // Estados para animar manchas
-  const [blobs, setBlobs] = useState([
-    { x: 25, y: 25 }, // azul
-    { x: 75, y: 75 }, // roxa
-    { x: 50, y: 50 }, // indigo
-  ]);
+  // ...existing code...
 
   // Trigger para animação suave após mount do componente
   useEffect(() => {

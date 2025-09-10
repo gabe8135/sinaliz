@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import ContactButton from "./ui/ContactButton";
+// ...existing code...
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +76,22 @@ export default function Header() {
 
           {/* CTA Button Desktop */}
           <div className="hidden md:block">
-            <ContactButton onClick={() => scrollToSection("contact")} size="lg" />
+            <ContactButton onClick={() => scrollToSection("contact")} size="lg" showIcon={false}>
+              Entre em Contato
+              <svg
+                className="w-5 h-5 ml-2 inline-block align-middle"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </ContactButton>
           </div>
 
           {/* Botão Menu Mobile */}
@@ -132,7 +146,7 @@ export default function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`block w-full text-left px-3 py-2 text-base font-medium transition-all duration-300 hover:text-blue-600 transform hover:translate-x-2 ${
+                className={`block w-full text-center px-3 py-2 text-base font-medium transition-all duration-300 hover:text-blue-600 transform hover:translate-x-2 ${
                   isScrolled ? "text-gray-700" : "text-white/90"
                 }`}
                 style={{
@@ -154,7 +168,23 @@ export default function Header() {
                 onClick={() => scrollToSection("contact")}
                 size="md"
                 className="mx-auto block"
-              />
+                showIcon={false}
+              >
+                Entre em Contato
+                <svg
+                  className="w-5 h-5 ml-2 inline-block align-middle"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </ContactButton>
             </div>
           </div>
         </div>

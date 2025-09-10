@@ -33,10 +33,10 @@ export default function About() {
     { name: "React.js", level: 85, color: "bg-blue-500" },
     { name: "Next.js", level: 80, color: "bg-gray-800" },
     { name: "Node.js", level: 75, color: "bg-green-500" },
-    { name: "PostgreSQL", level: 70, color: "bg-indigo-600" },
+    { name: "SQL", level: 70, color: "bg-indigo-600" },
     { name: "TailwindCSS", level: 88, color: "bg-cyan-500" },
     { name: "UX/UI Design", level: 80, color: "bg-purple-500" },
-    { name: "Supabase", level: 75, color: "bg-emerald-500" },
+    { name: "Git", level: 85, color: "bg-orange-500" },
   ];
 
   // Principais diferenciais e características
