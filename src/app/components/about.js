@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+// eslint-disable-next-line no-unused-vars
+import IconsShowcase from "./ui/TechShowcase";
 
 export default function About() {
   // Estados para controle de animações
@@ -165,28 +167,24 @@ export default function About() {
             </div>
           </div>
 
-          {/* Coluna 2: Imagem placeholder */}
+          {/* Coluna 2: Showcase de tecnologias (substitui a imagem) */}
           <div
             className={`transition-all duration-1000 delay-500 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
             }`}
           >
-            <div className="relative">
-              {/* Placeholder para foto profissional */}
-              <div className="w-full h-96 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                <div className="text-white text-center">
-                  <svg
-                    className="w-24 h-24 mx-auto mb-4 opacity-50"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                  </svg>
-                  <p className="text-lg opacity-75">Sua foto aqui</p>
-                  <p className="text-sm opacity-50">400x600px recomendado</p>
-                </div>
-              </div>
-            </div>
+            <IconsShowcase
+              technologies={[
+                "JavaScript",
+                "React",
+                "Next.js",
+                "Node.js",
+                "Tailwind CSS",
+                "PostgreSQL",
+                "Git",
+              ]}
+              className=""
+            />
           </div>
         </div>
 
@@ -227,10 +225,8 @@ export default function About() {
                 {/* Progress bar animada */}
                 <div className="w-full bg-gray-200 rounded-full h-3">
                   <div
-                    className={`h-3 rounded-full ${skill.color} transition-all duration-1500 delay-${index * 100}`}
-                    style={{
-                      width: skillsVisible ? `${skill.level}%` : "0%",
-                    }}
+                    className={`h-3 rounded-full ${skill.color} transition-all duration-1000`}
+                    style={{ width: skillsVisible ? `${skill.level}%` : "0%" }}
                   ></div>
                 </div>
               </div>
