@@ -4,6 +4,14 @@ import Button from "./ui/Button";
 import ContactButton from "./ui/ContactButton";
 
 export default function Projects() {
+  // Detecta se está em mobile (apenas no cliente)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // Estado para controlar quais cards estão com tecnologias expandidas
   const [expandedTech, setExpandedTech] = useState({});
 
@@ -65,7 +73,7 @@ export default function Projects() {
         github: "https://github.com/gabe8135/VemPraCa",
       },
       featured: true,
-      status: "Em desenvolvimento",
+      status: "Concluído",
     },
     {
       id: 2,
@@ -154,29 +162,43 @@ export default function Projects() {
     },
     {
       id: 4,
-      title: "Site Institucional",
-      category: "frontend",
+      title: "Levantamento de Dados - Evento Gastronomico",
+      category: "fullstack",
       description:
-        "Projeto iniciado recentemente. Em breve este card terá detalhes do site institucional desenvolvido!",
-      longDescription: "Projeto em fase inicial. Em breve mais informações e links reais.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Em breve"],
-      links: {},
-      featured: false,
-      status: "Em breve",
+        "Dashboard analítico para acompanhamento das avaliações dos estandes gastronômicos da Festa Caiçara, usando a plataforma VemPraCa como ferramenta central.",
+      longDescription:
+        "Desenvolvimento de sistema de métricas e relatórios em tempo real para o evento, com QR Codes individuais, gráficos de engajamento, exportação de dados e insights para os organizadores. Case de uso avançado do VemPraCa em eventos públicos.",
+      image: "/images/projects/dados.webp", // Troque para o caminho real da imagem
+      technologies: ["VemPraCa", "Next.js", "Supabase", "Chart.js", "Analytics"],
+      links: {
+        live: "https://vempracaapp.com/dashboard",
+        github: "https://github.com/gabe8135/VemPraCa",
+      },
+      featured: true,
+      status: "Concluído",
     },
     {
       id: 6,
-      title: "Loja Online",
+      title: "Clínica BemViver",
       category: "fullstack",
       description:
-        "Projeto de loja online iniciado recentemente. Em breve este card terá detalhes e links reais!",
-      longDescription: "Projeto em fase inicial. Em breve mais informações e links reais.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Em breve"],
+        "Página de agendamento de consultas para clínica multidisciplinar, com foco em Nutrição e Psicologia. Interface intuitiva, moderna e pensada para facilitar o acesso dos pacientes às especialidades.",
+      longDescription:
+        "O projeto BemViver foi desenvolvido para conectar pacientes às especialidades de Nutrição e Psicologia, oferecendo agendamento online, informações detalhadas e uma experiência acolhedora. Utiliza React e Next.js 14.2.33 para performance e SEO, Tailwind CSS para design responsivo, Framer Motion para animações suaves, hospedagem na Vercel, Webpack para build, HSTS para segurança e Priority Hints para otimização. O site reflete o cuidado e a atenção da clínica com cada paciente.",
+      image: "/images/projects/bemviver.webp",
+      technologies: [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Vercel",
+        "Webpack",
+        "HSTS",
+        "Priority Hints",
+      ],
       links: {},
       featured: false,
-      status: "Em breve",
+      status: "Em desenvolvimento",
     },
   ];
 
@@ -192,6 +214,39 @@ export default function Projects() {
   // Sistema de filtros para organizar projetos por categoria
   const filteredProjects =
     filter === "all" ? projects : projects.filter((project) => project.category === filter);
+
+  // Visibilidade individual dos cards
+  const [cardsVisible, setCardsVisible] = useState([]);
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    cardRefs.current = cardRefs.current.slice(0, filteredProjects.length);
+    const observers = cardRefs.current.map((ref, idx) => {
+      if (!ref) return null;
+      return new window.IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setCardsVisible((prev) => {
+              const updated = [...prev];
+              updated[idx] = true;
+              return updated;
+            });
+          }
+        },
+        // Dispara mais cedo: baixa sensibilidade e rootMargin negativo para
+        // iniciar a animação quando o card estiver parcialmente visível
+        { threshold: 0.01, rootMargin: "0px 0px -30% 0px" }
+      );
+    });
+    cardRefs.current.forEach((ref, idx) => {
+      if (ref && observers[idx]) observers[idx].observe(ref);
+    });
+    return () => {
+      observers.forEach((observer, idx) => {
+        if (observer && cardRefs.current[idx]) observer.disconnect();
+      });
+    };
+  }, [filteredProjects.length]);
 
   // Abertura de links externos em nova aba
   const openLink = (url) => {
@@ -211,7 +266,7 @@ export default function Projects() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Meus Projetos</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Projetos</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Alguns dos projetos que desenvolvi, desde MVPs até sistemas completos
           </p>
@@ -243,9 +298,19 @@ export default function Projects() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              } min-w-0`}
+              ref={(el) => (cardRefs.current[index] = el)}
+              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border border-gray-100 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-w-0
+                ${cardsVisible[index] ? "opacity-100" : "opacity-0"}
+                ${
+                  isMobile
+                    ? cardsVisible[index]
+                      ? "translate-y-0 scale-100"
+                      : "translate-y-8 scale-95"
+                    : cardsVisible[index]
+                      ? "translate-y-0"
+                      : "translate-y-10"
+                }
+              `}
               style={{
                 transitionDelay: `${index * 100 + 500}ms`,
               }}

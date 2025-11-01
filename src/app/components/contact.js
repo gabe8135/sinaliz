@@ -18,24 +18,31 @@ export default function Contact() {
   const [showModal, setShowModal] = useState(false);
   const sectionRef = useRef(null);
 
+  const [formCardVisible, setFormCardVisible] = useState(false);
+  const [contactCardVisible, setContactCardVisible] = useState(false);
   // Observer para animações na entrada da seção
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: window.innerWidth < 768 ? 0.01 : 0.2 }
     );
-
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-
     return () => observer.disconnect();
-  }, []);
-
+  }, [sectionRef]);
+  // Animação simples ao trocar de aba (mobile): esconde e mostra novamente para animar
+  useEffect(() => {
+    setFormCardVisible(false);
+    setContactCardVisible(false);
+    const timeout = setTimeout(() => {
+      if (activeTab === "form") setFormCardVisible(true);
+      else setContactCardVisible(true);
+    }, 50);
+    return () => clearTimeout(timeout);
+  }, [activeTab]);
   // Controle de mudanças nos inputs do formulário
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -205,7 +212,11 @@ export default function Contact() {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
             } ${activeTab === "form" ? "block" : "hidden lg:block"}`}
           >
-            <div className="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-8 rounded-2xl shadow-2xl h-full flex flex-col">
+            <div
+              className={`bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-8 rounded-2xl shadow-2xl h-full flex flex-col transition-all duration-700 transform ${
+                formCardVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+              }`}
+            >
               <h3 className="text-2xl font-bold text-white mb-6">Envie uma Mensagem</h3>
 
               <form onSubmit={handleSubmit} className="space-y-6 flex-1">
@@ -305,7 +316,11 @@ export default function Contact() {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
             } ${activeTab === "contact" ? "block" : "hidden lg:block"}`}
           >
-            <div className="space-y-8 h-full flex flex-col">
+            <div
+              className={`space-y-8 h-full flex flex-col transition-all duration-700 transform ${
+                contactCardVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              }`}
+            >
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Outras Formas de Contato</h3>
                 <p className="text-gray-600 mb-8">

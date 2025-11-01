@@ -167,24 +167,23 @@ export default function About() {
             </div>
           </div>
 
-          {/* Coluna 2: Showcase de tecnologias (substitui a imagem) */}
+          {/* Coluna 2: Imagem pessoal no mesmo card do showcase */}
           <div
             className={`transition-all duration-1000 delay-500 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-            }`}
+            } flex items-center justify-center w-full h-full`}
           >
-            <IconsShowcase
-              technologies={[
-                "JavaScript",
-                "React",
-                "Next.js",
-                "Node.js",
-                "Tailwind CSS",
-                "PostgreSQL",
-                "Git",
-              ]}
-              className=""
-            />
+            <div
+              className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl shadow-xl overflow-hidden flex items-center justify-center w-full h-full"
+              style={{ aspectRatio: "5/4", maxWidth: "400px", minWidth: "260px" }}
+            >
+              <img
+                src="/images/about/eu.webp"
+                alt="Gabriel Ramos"
+                className="object-cover w-full h-full"
+                style={{ aspectRatio: "5/4" }}
+              />
+            </div>
           </div>
         </div>
 

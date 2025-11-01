@@ -44,14 +44,16 @@ export default function Hero() {
     let mouseX = width / 2;
     let mouseY = height / 2;
     let mouseIsDown = false;
-    const RADIUS = 70;
+    const isCoarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    const RADIUS = isCoarse ? 140 : 200; // mais discreto
     let RADIUS_SCALE = 1;
     const RADIUS_SCALE_MIN = 1;
-    const RADIUS_SCALE_MAX = 1.5;
-    const QUANTITY = 22;
+    const RADIUS_SCALE_MAX = isCoarse ? 1.12 : 1.2; // respirações menores
+    const QUANTITY = isCoarse ? 16 : 22; // menos partículas em touch
     // Paleta hero
     const palette = ["#3b82f6", "#a855f7", "#6366f1", "#818cf8", "#c7d2fe", "#f3f4f6"];
     let particles = [];
+    let autoT = 0; // tempo para animação autônoma em telas touch
 
     function resize() {
       width = window.innerWidth;
@@ -68,7 +70,7 @@ export default function Hero() {
           position: { x: mouseX, y: mouseY },
           offset: { x: 0, y: 0 },
           shift: { x: mouseX, y: mouseY },
-          speed: 0.01 + Math.random() * 0.03,
+          speed: 0.0015 + Math.random() * 0.0035, // mais lento e sutil
           targetSize: 1,
           fillColor: palette[Math.floor(Math.random() * palette.length)],
           orbit: RADIUS * 0.5 + RADIUS * 0.5 * Math.random(),
@@ -77,10 +79,20 @@ export default function Hero() {
     }
 
     function loop() {
-      if (mouseIsDown) {
-        RADIUS_SCALE += (RADIUS_SCALE_MAX - RADIUS_SCALE) * 0.02;
+      if (isCoarse) {
+        // Modo autônomo em touch: alvo se move em trajetória suave
+        autoT += 0.003; // muito lento
+        mouseX = width / 2 + Math.cos(autoT * 0.9) * width * 0.08;
+        mouseY = height / 2 + Math.sin(autoT * 0.6) * height * 0.06;
+        const targetScale = 1 + 0.06 * Math.sin(autoT * 0.8);
+        RADIUS_SCALE += (targetScale - RADIUS_SCALE) * 0.01;
       } else {
-        RADIUS_SCALE -= (RADIUS_SCALE - RADIUS_SCALE_MIN) * 0.02;
+        // Desktop: responde ao mouse, mas de forma sutil
+        if (mouseIsDown) {
+          RADIUS_SCALE += (RADIUS_SCALE_MAX - RADIUS_SCALE) * 0.01;
+        } else {
+          RADIUS_SCALE -= (RADIUS_SCALE - RADIUS_SCALE_MIN) * 0.01;
+        }
       }
       RADIUS_SCALE = Math.min(RADIUS_SCALE, RADIUS_SCALE_MAX);
       ctx.clearRect(0, 0, width, height);
@@ -98,7 +110,7 @@ export default function Hero() {
         p.position.y = Math.max(Math.min(p.position.y, height), 0);
         p.size += (p.targetSize - p.size) * 0.05;
         if (Math.round(p.size) === Math.round(p.targetSize)) {
-          p.targetSize = 1 + Math.random() * 7;
+          p.targetSize = 1 + Math.random() * 4; // variação menor para sutileza
         }
         ctx.save();
         // Cauda tipo cometa
@@ -106,18 +118,18 @@ export default function Hero() {
         ctx.moveTo(lp.x, lp.y);
         ctx.lineTo(p.position.x, p.position.y);
         ctx.strokeStyle = p.fillColor;
-        ctx.globalAlpha = 0.18;
-        ctx.lineWidth = p.size * 2.5;
+        ctx.globalAlpha = isCoarse ? 0.08 : 0.12; // mais invisível
+        ctx.lineWidth = p.size * 1.6;
         ctx.shadowColor = p.fillColor;
-        ctx.shadowBlur = 32;
+        ctx.shadowBlur = 18;
         ctx.stroke();
 
         // Bolinha principal
         ctx.beginPath();
         ctx.arc(p.position.x, p.position.y, p.size, 0, Math.PI * 2, true); // tamanho dobrado
         ctx.fillStyle = p.fillColor;
-        ctx.globalAlpha = 0.45;
-        ctx.shadowBlur = 64;
+        ctx.globalAlpha = isCoarse ? 0.2 : 0.28; // opacidade reduzida
+        ctx.shadowBlur = 28;
         ctx.fill();
         ctx.restore();
       }
@@ -135,17 +147,21 @@ export default function Hero() {
       mouseIsDown = false;
     }
 
-    window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("mousedown", mouseDown);
-    window.addEventListener("mouseup", mouseUp);
+    if (!isCoarse) {
+      window.addEventListener("mousemove", mouseMove);
+      window.addEventListener("mousedown", mouseDown);
+      window.addEventListener("mouseup", mouseUp);
+    }
     window.addEventListener("resize", resize);
     resize();
     createParticles();
     loop();
     return () => {
-      window.removeEventListener("mousemove", mouseMove);
-      window.removeEventListener("mousedown", mouseDown);
-      window.removeEventListener("mouseup", mouseUp);
+      if (!isCoarse) {
+        window.removeEventListener("mousemove", mouseMove);
+        window.removeEventListener("mousedown", mouseDown);
+        window.removeEventListener("mouseup", mouseUp);
+      }
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(frame);
     };
@@ -170,7 +186,11 @@ export default function Hero() {
     >
       {/* Canvas de partículas interativas */}
       {/* Background gradient customizado com overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-gray-900 z-0">
+      <div
+        ref={parallaxRef}
+        className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-gray-900 z-0"
+        style={{ transform: `translateY(${parallaxY * 0.1}px)` }}
+      >
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
       {/* Canvas de partículas interativas */}
@@ -239,9 +259,9 @@ export default function Hero() {
           {/* Indicador visual de scroll */}
           <div className="mt-16 animate-bounce">
             <button
-              onClick={() => scrollToSection("about")}
+              onClick={() => scrollToSection("projects")}
               className="text-gray-400 hover:text-white transition-colors duration-300"
-              aria-label="Rolar para próxima seção"
+              aria-label="Rolar para seção de projetos"
             >
               <svg
                 className="w-6 h-6 mx-auto"
