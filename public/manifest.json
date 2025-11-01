@@ -1,0 +1,23 @@
+{
+  "name": "Gabriel Ramos - Portfólio",
+  "short_name": "GabrielR",
+  "description": "Portfólio de Gabriel Ramos - Desenvolvedor Full Stack & UX Product",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
