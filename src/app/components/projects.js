@@ -47,7 +47,7 @@ export default function Projects() {
     {
       id: 1,
       title: "VemPraCá App",
-      category: "fullstack",
+      category: "fullstack backend mobile frontend",
       description:
         "Plataforma inovadora que conecta empresas locais com clientes, oferecendo sistema de marketplace, geolocalização e pagamentos integrados.",
       longDescription:
@@ -78,7 +78,7 @@ export default function Projects() {
     {
       id: 2,
       title: "Bella Pratas",
-      category: "fullstack",
+      category: "fullstack backend mobile frontend",
       description:
         "Loja virtual e mostruário online para joalheria, com catálogo de produtos, design elegante e responsivo.",
       longDescription:
@@ -107,7 +107,7 @@ export default function Projects() {
     {
       id: 7,
       title: "Geomind",
-      category: "fullstack",
+      category: "fullstack mobile frontend",
       description:
         "Site empresarial moderno para a Geomind, com animações, performance e recursos avançados.",
       longDescription:
@@ -163,7 +163,7 @@ export default function Projects() {
     {
       id: 4,
       title: "Levantamento de Dados - Evento Gastronomico",
-      category: "fullstack",
+      category: "fullstack backend frontend",
       description:
         "Dashboard analítico para acompanhamento das avaliações dos estandes gastronômicos da Festa Caiçara, usando a plataforma VemPraCa como ferramenta central.",
       longDescription:
@@ -180,7 +180,7 @@ export default function Projects() {
     {
       id: 6,
       title: "Clínica BemViver",
-      category: "fullstack",
+      category: "fullstack backend frontend",
       description:
         "Página de agendamento de consultas para clínica multidisciplinar, com foco em Nutrição e Psicologia. Interface intuitiva, moderna e pensada para facilitar o acesso dos pacientes às especialidades.",
       longDescription:
@@ -213,7 +213,9 @@ export default function Projects() {
 
   // Sistema de filtros para organizar projetos por categoria
   const filteredProjects =
-    filter === "all" ? projects : projects.filter((project) => project.category === filter);
+    filter === "all"
+      ? projects
+      : projects.filter((project) => project.category.split(" ").includes(filter));
 
   // Visibilidade individual dos cards
   const [cardsVisible, setCardsVisible] = useState([]);
@@ -233,9 +235,9 @@ export default function Projects() {
             });
           }
         },
-        // Dispara mais cedo: baixa sensibilidade e rootMargin negativo para
-        // iniciar a animação quando o card estiver parcialmente visível
-        { threshold: 0.01, rootMargin: "0px 0px -30% 0px" }
+        // Dispara mais cedo: baixa sensibilidade e rootMargin positivo
+        // para iniciar a animação antes do card entrar totalmente na viewport
+        { threshold: 0, rootMargin: "0px 0px 300px 0px" }
       );
     });
     cardRefs.current.forEach((ref, idx) => {
@@ -299,7 +301,7 @@ export default function Projects() {
             <div
               key={project.id}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border border-gray-100 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-w-0
+              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border border-blue-100 bg-[#f3f5f8a6] min-w-0
                 ${cardsVisible[index] ? "opacity-100" : "opacity-0"}
                 ${
                   isMobile
@@ -360,11 +362,11 @@ export default function Projects() {
 
               {/* Conteúdo do card estilizado */}
               <div className="p-8 flex flex-col h-full">
-                <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-lg">
-                  {project.title}
-                </h3>
+                <h3 className="text-2xl font-bold text-blue-900 mb-1">{project.title}</h3>
 
-                <p className="text-white/90 mb-5 line-clamp-3 text-base">{project.description}</p>
+                <p className="mb-5 line-clamp-3 text-base" style={{ color: "#779ECB" }}>
+                  {project.description}
+                </p>
 
                 {/* Stack de tecnologias */}
                 <div className="flex flex-wrap gap-2 mb-6">

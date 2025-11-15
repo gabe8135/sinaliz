@@ -1,10 +1,5 @@
 const CACHE_NAME = "webfolio-static-v1";
-const PRECACHE_URLS = [
-  "/",
-  "/manifest.json",
-  "/images/favicon.png",
-  "/images/favicon.webp",
-];
+const PRECACHE_URLS = ["/", "/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -38,11 +33,7 @@ self.addEventListener("fetch", (event) => {
       return fetch(request)
         .then((response) => {
           // Opcional: cachear respostas de mesma origem
-          if (
-            response &&
-            response.status === 200 &&
-            request.url.startsWith(self.location.origin)
-          ) {
+          if (response && response.status === 200 && request.url.startsWith(self.location.origin)) {
             const copy = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
           }

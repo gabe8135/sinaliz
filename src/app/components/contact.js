@@ -33,8 +33,16 @@ export default function Contact() {
     }
     return () => observer.disconnect();
   }, [sectionRef]);
-  // Animação simples ao trocar de aba (mobile): esconde e mostra novamente para animar
+  // Animação ao trocar de aba: no mobile anima apenas o card ativo; no desktop mantém ambos visíveis
   useEffect(() => {
+    const isDesktop =
+      typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches;
+    if (isDesktop) {
+      setFormCardVisible(true);
+      setContactCardVisible(true);
+      return; // sem timeout no desktop
+    }
+    // Mobile: anima card da aba ativa
     setFormCardVisible(false);
     setContactCardVisible(false);
     const timeout = setTimeout(() => {

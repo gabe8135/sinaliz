@@ -6,7 +6,6 @@ import IconsShowcase from "./ui/TechShowcase";
 export default function About() {
   // Estados para controle de animações
   const [isVisible, setIsVisible] = useState(false);
-  const [skillsVisible, setSkillsVisible] = useState(false);
   const sectionRef = useRef(null);
 
   // Observer para animar elementos quando entram na viewport
@@ -15,8 +14,6 @@ export default function About() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Delay para skills aparecerem depois
-          setTimeout(() => setSkillsVisible(true), 500);
         }
       },
       { threshold: window.innerWidth < 768 ? 0.01 : 0.3 }
@@ -29,16 +26,39 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // Skills técnicas com níveis de proficiência
+  // Skills técnicas (somente nomes, sem barras ou porcentagens)
   const skills = [
-    { name: "JavaScript", level: 90, color: "bg-yellow-500" },
-    { name: "React.js", level: 85, color: "bg-blue-500" },
-    { name: "Next.js", level: 80, color: "bg-gray-800" },
-    { name: "Node.js", level: 75, color: "bg-green-500" },
-    { name: "SQL", level: 70, color: "bg-indigo-600" },
-    { name: "TailwindCSS", level: 88, color: "bg-cyan-500" },
-    { name: "UX/UI Design", level: 80, color: "bg-purple-500" },
-    { name: "Git", level: 85, color: "bg-orange-500" },
+    // Linguagens e frameworks
+    "JavaScript",
+    "React",
+    "Next.js",
+    "Node.js",
+
+    // Backend e banco de dados
+    "Supabase",
+    "PostgreSQL",
+    "SQL",
+
+    // UI/UX e animações
+    "Tailwind CSS",
+    "Radix UI",
+    "Framer Motion",
+
+    // Build/deploy
+    "Webpack",
+    "Vercel",
+    "Netlify",
+
+    // PWA
+    "PWA",
+
+    // Analytics
+    "Google Analytics GA4",
+    "Google Tag Manager",
+
+    // Outras competências
+    "UX/UI Design",
+    "Git",
   ];
 
   // Principais diferenciais e características
@@ -205,30 +225,21 @@ export default function About() {
           ))}
         </div>
 
-        {/* Seção de skills técnicas com barras de progresso */}
+        {/* Seção de skills técnicas (somente nomes) */}
         <div
-          className={`transition-all duration-1000 delay-1000 ${
-            skillsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`transition-all duration-1000 delay-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Minhas Habilidades</h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-wrap gap-3 justify-center">
             {skills.map((skill, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-900">{skill.name}</span>
-                  <span className="text-gray-600 text-sm">{skill.level}%</span>
-                </div>
-
-                {/* Progress bar animada */}
-                <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div
-                    className={`h-3 rounded-full ${skill.color} transition-all duration-1000`}
-                    style={{ width: skillsVisible ? `${skill.level}%` : "0%" }}
-                  ></div>
-                </div>
-              </div>
+              <span
+                key={index}
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 text-gray-800 text-sm font-semibold border border-gray-200"
+              >
+                {skill}
+              </span>
             ))}
           </div>
         </div>

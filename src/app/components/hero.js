@@ -228,10 +228,11 @@ export default function Hero() {
 
           {/* Descrição das especialidades */}
           <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Especialista em{" "}
-            <span className="text-blue-300 font-semibold">lançamento de produtos digitais</span> e
-            <span className="text-purple-300 font-semibold"> desenvolvimento de marcas</span>.
-            Criando experiências web inovadoras que conectam tecnologia, design e estratégia.
+            Com experiência em{" "}
+            <span className="text-blue-300 font-semibold">produtos digitais</span> e{" "}
+            <span className="text-purple-300 font-semibold">construção de marcas</span>, ajudo
+            empresas e pessoas a transformar ideias em soluções web que unem tecnologia, design e
+            estratégia. Meu foco é entregar valor real, com visão prática e colaborativa.
           </p>
 
           {/* Botões de call-to-action */}

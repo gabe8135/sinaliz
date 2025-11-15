@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Gabriel Ramos | Desenvolvedor Full Stack & UX Product",
-  description: "Portfolio de Gabriel Ramos - Desenvolvedor Full Stack especializado em UX/Product com expertise em lançamento de produtos digitais e desenvolvimento de marcas.",
+  description:
+    "Portfolio de Gabriel Ramos - Desenvolvedor Full Stack especializado em UX/Product com expertise em lançamento de produtos digitais e desenvolvimento de marcas.",
 };
 
 export default function RootLayout({ children }) {
@@ -28,9 +29,7 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/images/favicon.png" />
         <meta name="theme-color" content="#0f172a" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
         {children}
         <Footer />
