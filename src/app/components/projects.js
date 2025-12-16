@@ -46,7 +46,7 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "VemPraCá App",
+      title: "Marketplace Local & App",
       category: "fullstack backend mobile frontend",
       description:
         "Plataforma inovadora que conecta empresas locais com clientes, oferecendo sistema de marketplace, geolocalização e pagamentos integrados.",
@@ -77,7 +77,7 @@ export default function Projects() {
     },
     {
       id: 2,
-      title: "Bella Pratas",
+      title: "Catálogo Online de Produtos",
       category: "fullstack backend mobile frontend",
       description:
         "Loja virtual e mostruário online para joalheria, com catálogo de produtos, design elegante e responsivo.",
@@ -106,7 +106,7 @@ export default function Projects() {
     },
     {
       id: 7,
-      title: "Geomind",
+      title: "Site Institucional Moderno",
       category: "fullstack mobile frontend",
       description:
         "Site empresarial moderno para a Geomind, com animações, performance e recursos avançados.",
@@ -162,7 +162,7 @@ export default function Projects() {
     },
     {
       id: 4,
-      title: "Levantamento de Dados - Evento Gastronomico",
+      title: "Dashboard Analítico de Evento",
       category: "fullstack backend frontend",
       description:
         "Dashboard analítico para acompanhamento das avaliações dos estandes gastronômicos da Festa Caiçara, usando a plataforma VemPraCa como ferramenta central.",
@@ -179,7 +179,7 @@ export default function Projects() {
     },
     {
       id: 6,
-      title: "Clínica BemViver",
+      title: "Página de Agendamento Online",
       category: "fullstack backend frontend",
       description:
         "Página de agendamento de consultas para clínica multidisciplinar, com foco em Nutrição e Psicologia. Interface intuitiva, moderna e pensada para facilitar o acesso dos pacientes às especialidades.",
