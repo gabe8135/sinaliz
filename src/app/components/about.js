@@ -173,7 +173,7 @@ export default function About() {
             {/* Stats/números */}
             <div className="grid grid-cols-3 gap-4 mt-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">3+</div>
+                <div className="text-2xl font-bold text-blue-600">2+</div>
                 <div className="text-sm text-gray-600">Anos Experiência</div>
               </div>
               <div className="text-center">

@@ -282,7 +282,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Estatísticas/números impressionantes (opcional) */}
+      {/* Estatísticas/números impressionantes (opcional)
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block">
         <div className="flex space-x-8 text-center">
           <div className="text-white">
@@ -298,7 +298,7 @@ export default function Hero() {
             <p className="text-sm text-gray-400">Satisfação</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
