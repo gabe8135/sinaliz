@@ -1,10 +1,9 @@
 "use client";
 import { testimonials } from "../../data/testimonials";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay, EffectFade } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/effect-fade";
 
 import { useState, useEffect, useRef } from "react";
 export default function Testimonials() {
@@ -31,10 +30,8 @@ export default function Testimonials() {
           O que clientes dizem
         </h2>
         <Swiper
-          modules={[Navigation, Autoplay, EffectFade]}
-          effect="fade"
-          fadeEffect={{ crossFade: true }}
-          speed={1200}
+          modules={[Navigation, Autoplay]}
+          speed={600}
           navigation={{
             enabled: true,
             hideOnClick: true,
