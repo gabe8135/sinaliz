@@ -46,7 +46,7 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "Marketplace Local & App",
+      title: "App Marketplace Local",
       category: "fullstack backend mobile frontend",
       description:
         "Plataforma inovadora que conecta empresas locais com clientes, oferecendo sistema de marketplace, geolocalização e pagamentos integrados.",
