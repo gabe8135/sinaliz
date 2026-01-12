@@ -41,127 +41,89 @@ export default function Hero() {
     const ctx = canvas.getContext("2d");
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let mouseX = width / 2;
-    let mouseY = height / 2;
-    let mouseIsDown = false;
-    const isCoarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    const RADIUS = isCoarse ? 140 : 200; // mais discreto
-    let RADIUS_SCALE = 1;
-    const RADIUS_SCALE_MIN = 1;
-    const RADIUS_SCALE_MAX = isCoarse ? 1.12 : 1.2; // respirações menores
-    const QUANTITY = isCoarse ? 16 : 22; // menos partículas em touch
-    // Paleta hero
-    const palette = ["#3b82f6", "#a855f7", "#6366f1", "#818cf8", "#c7d2fe", "#f3f4f6"];
-    let particles = [];
-    let autoT = 0; // tempo para animação autônoma em telas touch
+    canvas.width = width;
+    canvas.height = height;
 
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
+    // Parâmetros da galáxia
+    const STAR_COUNT = 180;
+    const ARMS = 4;
+    const ARM_SPREAD = (Math.PI * 2) / ARMS;
+    const SPIRAL_TIGHTNESS = 0.12;
+    const STAR_COLORS = ["#fff", "#c7d2fe", "#818cf8", "#a855f7", "#f3f4f6", "#6366f1"];
+    let stars = [];
 
-    function createParticles() {
-      particles = [];
-      for (let i = 0; i < QUANTITY; i++) {
-        particles.push({
-          size: 1,
-          position: { x: mouseX, y: mouseY },
-          offset: { x: 0, y: 0 },
-          shift: { x: mouseX, y: mouseY },
-          speed: 0.0015 + Math.random() * 0.0035, // mais lento e sutil
-          targetSize: 1,
-          fillColor: palette[Math.floor(Math.random() * palette.length)],
-          orbit: RADIUS * 0.5 + RADIUS * 0.5 * Math.random(),
+    function createGalaxy() {
+      stars = [];
+      for (let i = 0; i < STAR_COUNT; i++) {
+        // Espalha por toda a tela, não só centro
+        const arm = i % ARMS;
+        const angle = arm * ARM_SPREAD + Math.random() * ARM_SPREAD;
+        // Espalha as estrelas por toda a tela
+        const maxRadius = Math.sqrt(width * width + height * height) / 2;
+        const distance = 40 + Math.random() * (maxRadius - 40);
+        const spiralAngle = angle + distance * SPIRAL_TIGHTNESS * (Math.random() * 0.7 + 0.7);
+        // Centro aleatório para espalhar
+        const centerX = width * (0.2 + 0.6 * Math.random());
+        const centerY = height * (0.2 + 0.6 * Math.random());
+        stars.push({
+          baseAngle: spiralAngle,
+          distance,
+          speed: 0.000045 + Math.random() * 0.00008, // Metade da velocidade anterior
+          size: 1.2 + Math.random() * 1.8,
+          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+          twinkle: Math.random() * Math.PI * 2,
+          centerX,
+          centerY,
         });
       }
     }
 
-    function loop() {
-      if (isCoarse) {
-        // Modo autônomo em touch: alvo se move em trajetória suave
-        autoT += 0.003; // muito lento
-        mouseX = width / 2 + Math.cos(autoT * 0.9) * width * 0.08;
-        mouseY = height / 2 + Math.sin(autoT * 0.6) * height * 0.06;
-        const targetScale = 1 + 0.06 * Math.sin(autoT * 0.8);
-        RADIUS_SCALE += (targetScale - RADIUS_SCALE) * 0.01;
-      } else {
-        // Desktop: responde ao mouse, mas de forma sutil
-        if (mouseIsDown) {
-          RADIUS_SCALE += (RADIUS_SCALE_MAX - RADIUS_SCALE) * 0.01;
-        } else {
-          RADIUS_SCALE -= (RADIUS_SCALE - RADIUS_SCALE_MIN) * 0.01;
-        }
-      }
-      RADIUS_SCALE = Math.min(RADIUS_SCALE, RADIUS_SCALE_MAX);
+    function loop(ts) {
       ctx.clearRect(0, 0, width, height);
-      // Removido fundo preto, só desenha as bolinhas
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        const lp = { x: p.position.x, y: p.position.y };
-        p.offset.x += p.speed;
-        p.offset.y += p.speed;
-        p.shift.x += (mouseX - p.shift.x) * p.speed;
-        p.shift.y += (mouseY - p.shift.y) * p.speed;
-        p.position.x = p.shift.x + Math.cos(i + p.offset.x) * (p.orbit * RADIUS_SCALE);
-        p.position.y = p.shift.y + Math.sin(i + p.offset.y) * (p.orbit * RADIUS_SCALE);
-        p.position.x = Math.max(Math.min(p.position.x, width), 0);
-        p.position.y = Math.max(Math.min(p.position.y, height), 0);
-        p.size += (p.targetSize - p.size) * 0.05;
-        if (Math.round(p.size) === Math.round(p.targetSize)) {
-          p.targetSize = 1 + Math.random() * 4; // variação menor para sutileza
-        }
-        ctx.save();
-        // Cauda tipo cometa
-        ctx.beginPath();
-        ctx.moveTo(lp.x, lp.y);
-        ctx.lineTo(p.position.x, p.position.y);
-        ctx.strokeStyle = p.fillColor;
-        ctx.globalAlpha = isCoarse ? 0.08 : 0.12; // mais invisível
-        ctx.lineWidth = p.size * 1.6;
-        ctx.shadowColor = p.fillColor;
-        ctx.shadowBlur = 18;
-        ctx.stroke();
+      // Fundo escuro espacial
+      ctx.save();
+      const grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, "#0d0a1f"); // azul/roxo bem escuro
+      grad.addColorStop(1, "#140a22"); // roxo profundo
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+      ctx.restore();
 
-        // Bolinha principal
+      // Desenha estrelas em espiral espalhadas
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        // Movimento orbital
+        const t = ts * star.speed + star.baseAngle;
+        const spiralRadius = star.distance * (1 + 0.08 * Math.sin(t * 0.2 + i));
+        const x = star.centerX + Math.cos(t) * spiralRadius;
+        const y = star.centerY + Math.sin(t) * spiralRadius * (0.98 + 0.04 * Math.cos(i));
+        // Twinkle
+        const twinkle = 0.7 + 0.5 * Math.sin(ts * 0.002 + star.twinkle);
+        ctx.save();
         ctx.beginPath();
-        ctx.arc(p.position.x, p.position.y, p.size, 0, Math.PI * 2, true); // tamanho dobrado
-        ctx.fillStyle = p.fillColor;
-        ctx.globalAlpha = isCoarse ? 0.2 : 0.28; // opacidade reduzida
-        ctx.shadowBlur = 28;
+        ctx.arc(x, y, star.size * twinkle, 0, Math.PI * 2, true);
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = 0.7 + 0.3 * twinkle;
+        ctx.shadowColor = star.color;
+        ctx.shadowBlur = 16;
         ctx.fill();
         ctx.restore();
       }
       frame = requestAnimationFrame(loop);
     }
 
-    function mouseMove(e) {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    }
-    function mouseDown() {
-      mouseIsDown = true;
-    }
-    function mouseUp() {
-      mouseIsDown = false;
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      createGalaxy();
     }
 
-    if (!isCoarse) {
-      window.addEventListener("mousemove", mouseMove);
-      window.addEventListener("mousedown", mouseDown);
-      window.addEventListener("mouseup", mouseUp);
-    }
     window.addEventListener("resize", resize);
-    resize();
-    createParticles();
-    loop();
+    createGalaxy();
+    loop(0);
     return () => {
-      if (!isCoarse) {
-        window.removeEventListener("mousemove", mouseMove);
-        window.removeEventListener("mousedown", mouseDown);
-        window.removeEventListener("mouseup", mouseUp);
-      }
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(frame);
     };
