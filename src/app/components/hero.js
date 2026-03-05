@@ -166,7 +166,7 @@ export default function Hero() {
       {/* Removido bloco de manchas animadas, agora o fundo é o canvas interativo */}
 
       {/* Container principal responsivo */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 sm:mt-24">
         {/* Animação condicional baseada no state */}
         <div
           className={`transition-all duration-1000 ${
