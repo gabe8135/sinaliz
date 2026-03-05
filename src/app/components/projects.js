@@ -46,7 +46,7 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "App Marketplace Local",
+      title: "Marketplace Local & App",
       category: "fullstack backend mobile frontend",
       description:
         "Plataforma inovadora que conecta empresas locais com clientes, oferecendo sistema de marketplace, geolocalização e pagamentos integrados.",
@@ -259,7 +259,7 @@ export default function Projects() {
     <section
       ref={sectionRef}
       id="projects"
-      className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-white overflow-x-hidden w-full"
+      className="py-20 bg-gradient-to-br from-[#F4F6F8] via-[#E7EDF1] to-white overflow-x-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Cabeçalho da seção */}
@@ -276,7 +276,7 @@ export default function Projects() {
 
         {/* Filtros de categoria */}
         <div
-          className={`flex flex-wrap justify-center gap-4 mb-12 transition-all duration-1000 delay-300 ${
+          className={`flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
@@ -284,10 +284,11 @@ export default function Projects() {
             <button
               key={category.key}
               onClick={() => setFilter(category.key)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              aria-pressed={filter === category.key}
+              className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2 ${
                 filter === category.key
-                  ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  ? "bg-[#12324A] text-white shadow-lg"
+                  : "bg-white text-gray-700 hover:bg-[#E7EDF1] hover:text-[#1F6B7A]"
               }`}
             >
               {category.label}
@@ -296,46 +297,56 @@ export default function Projects() {
         </div>
 
         {/* Grid responsivo de projetos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8 min-w-0 items-stretch">
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`relative rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 border border-blue-100 bg-[#f3f5f8a6] min-w-0
-                ${cardsVisible[index] ? "opacity-100" : "opacity-0"}
+              className={`group relative flex flex-col h-full rounded-3xl overflow-hidden transition-all duration-500 border border-[#D3DEE6] bg-white/85 backdrop-blur-sm min-w-0 shadow-[0_16px_40px_-22px_rgba(18,50,74,0.45)]
+                ${cardsVisible[index] ? "opacity-100 blur-0" : "opacity-0 blur-[2px]"}
                 ${
                   isMobile
                     ? cardsVisible[index]
                       ? "translate-y-0 scale-100"
-                      : "translate-y-8 scale-95"
+                      : "translate-y-8 scale-[0.98]"
                     : cardsVisible[index]
-                      ? "translate-y-0"
-                      : "translate-y-10"
+                      ? "translate-y-0 scale-100"
+                      : "translate-y-10 scale-[0.98]"
                 }
+                motion-safe:hover:-translate-y-2 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-[0_24px_54px_-24px_rgba(18,50,74,0.55)] motion-safe:hover:border-[#9FB3C0]
               `}
               style={{
                 transitionDelay: `${index * 100 + 500}ms`,
               }}
             >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(31,107,122,0.2),transparent_55%)]"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#12324A] via-[#1F6B7A] to-[#9FB3C0]"
+              />
+
               {/* Badge para projetos em destaque */}
               {project.featured && (
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="bg-gradient-to-r from-[#12324A] to-[#1F6B7A] text-white text-[11px] font-bold tracking-wide uppercase px-4 py-2 rounded-full shadow-lg ring-1 ring-white/25">
                     Destaque
                   </span>
                 </div>
               )}
 
               {/* Imagem do projeto ou placeholder */}
-              <div className="relative h-48 bg-white flex items-center justify-center overflow-hidden">
+              <div className="relative z-10 h-44 sm:h-48 lg:h-52 bg-[#F7FAFC] flex items-center justify-center overflow-hidden">
                 {project.image && project.image !== "/api/placeholder/600/400" ? (
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="object-cover h-full w-full"
+                    className="object-cover h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                 ) : (
-                  <div className="text-purple-400 text-center">
+                  <div className="text-[#5E7685] text-center">
                     <svg
                       className="w-16 h-16 mx-auto mb-2 opacity-80"
                       fill="currentColor"
@@ -346,13 +357,17 @@ export default function Projects() {
                     <p className="text-sm font-semibold">Screenshot do projeto</p>
                   </div>
                 )}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B1623]/35 via-transparent to-transparent"
+                />
                 {/* Status badge */}
-                <div className="absolute top-4 right-4">
+                <div className="absolute top-4 right-4 z-20">
                   <span
-                    className={`px-3 py-1 text-xs rounded-full font-bold shadow-md ${
+                    className={`px-3 py-1 text-xs rounded-full font-semibold shadow-md ring-1 ${
                       project.status === "Concluído"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-blue-100 text-blue-800"
+                        ? "bg-green-100 text-green-800 ring-green-200"
+                        : "bg-[#E7EDF1] text-[#12324A] ring-[#C9D7E0]"
                     }`}
                   >
                     {project.status}
@@ -361,29 +376,31 @@ export default function Projects() {
               </div>
 
               {/* Conteúdo do card estilizado */}
-              <div className="p-8 flex flex-col h-full">
-                <h3 className="text-2xl font-bold text-blue-900 mb-1">{project.title}</h3>
+              <div className="relative z-10 p-6 sm:p-7 flex flex-1 flex-col">
+                <h3 className="text-xl sm:text-2xl leading-tight font-bold text-[#12324A] mb-2 min-h-[3rem]">
+                  {project.title}
+                </h3>
 
-                <p className="mb-5 line-clamp-3 text-base" style={{ color: "#779ECB" }}>
+                <p className="mb-6 line-clamp-3 text-[15px] sm:text-base text-[#334155] leading-relaxed min-h-[4.5rem]">
                   {project.description}
                 </p>
 
                 {/* Stack de tecnologias */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2.5 mb-6">
                   {(expandedTech[project.id]
                     ? project.technologies
                     : project.technologies.slice(0, 3)
                   ).map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-gradient-to-r from-blue-50 to-purple-50 text-gray-800 text-sm rounded-full font-semibold shadow border border-gray-100"
+                      className="px-3 py-1.5 bg-gradient-to-r from-[#F4F6F8] to-[#E7EDF1] text-[#183247] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#D7E3EA]"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 3 && !expandedTech[project.id] && (
                     <button
-                      className="px-3 py-1 bg-gradient-to-r from-blue-50 via-purple-50 to-white text-gray-800 text-sm rounded-full font-semibold shadow border border-gray-100 focus:outline-none hover:bg-blue-100 transition"
+                      className="px-3 py-1.5 bg-gradient-to-r from-[#F4F6F8] via-[#E7EDF1] to-white text-[#183247] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#D7E3EA] hover:bg-[#DCE7EE] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2"
                       onClick={() => toggleTech(project.id)}
                       aria-label={`Mostrar todas as tecnologias do projeto ${project.title}`}
                       type="button"
@@ -393,7 +410,7 @@ export default function Projects() {
                   )}
                   {project.technologies.length > 3 && expandedTech[project.id] && (
                     <button
-                      className="px-3 py-1 bg-gradient-to-r from-purple-100 via-blue-100 to-white text-purple-700 text-xs rounded-full font-bold shadow border-2 border-blue-300 focus:outline-none hover:bg-purple-200 transition flex items-center gap-1"
+                      className="px-3 py-1.5 bg-gradient-to-r from-[#E7EDF1] via-[#D7E3EA] to-white text-[#12324A] text-xs rounded-full font-bold shadow-sm border-2 border-[#9FB3C0] hover:bg-[#DCE7EE] transition flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2"
                       onClick={() => toggleTech(project.id)}
                       aria-label={`Ocultar tecnologias do projeto ${project.title}`}
                       type="button"
@@ -418,13 +435,13 @@ export default function Projects() {
                 </div>
 
                 {/* Botões de ação padronizados */}
-                <div className="flex gap-3">
+                <div className="mt-auto flex flex-col sm:flex-row gap-3">
                   {project.links.live && (
                     <Button
                       onClick={() => openLink(project.links.live)}
                       variant="primary"
                       size="sm"
-                      className="flex-1 text-sm"
+                      className="sm:flex-1 text-sm"
                     >
                       Ver Demo
                     </Button>
@@ -435,7 +452,7 @@ export default function Projects() {
                       onClick={() => openLink(project.links.github)}
                       variant="secondary"
                       size="sm"
-                      className="flex-1 text-sm"
+                      className="sm:flex-1 text-sm"
                     >
                       GitHub
                     </Button>

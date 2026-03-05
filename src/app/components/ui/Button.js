@@ -12,12 +12,12 @@ export default function Button({
   // Variações de estilo
   const variants = {
     primary:
-      "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700",
-    secondary: "border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white",
-    outline: "border-2 border-gray-300 text-gray-700 hover:border-blue-400 hover:text-blue-600",
-    ghost: "text-gray-700 hover:bg-gray-100 hover:text-blue-600",
+      "bg-gradient-to-r from-[#12324A] to-[#1F6B7A] text-white hover:from-[#0F2A3E] hover:to-[#175764]",
+    secondary: "border-2 border-[#1F6B7A] text-[#1F6B7A] hover:bg-[#1F6B7A] hover:text-white",
+    outline: "border-2 border-gray-300 text-gray-700 hover:border-[#1F6B7A] hover:text-[#1F6B7A]",
+    ghost: "text-gray-700 hover:bg-gray-100 hover:text-[#1F6B7A]",
     white:
-      "bg-white border-2 text-blue-700 hover:bg-blue-50 hover:border-purple-400 hover:text-purple-700",
+      "bg-white border-2 text-[#12324A] hover:bg-[#E7EDF1] hover:border-[#1F6B7A] hover:text-[#1F6B7A]",
   };
 
   // Tamanhos
@@ -31,6 +31,8 @@ export default function Button({
   const baseClasses = `
     relative rounded-full font-semibold transition-all duration-300 
     hover:scale-105 shadow-lg hover:shadow-xl group overflow-hidden
+    active:scale-[0.99]
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2
     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
     ${variants[variant]} 
     ${sizes[size]} 

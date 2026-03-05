@@ -49,7 +49,7 @@ export default function Header() {
           <div className="flex-shrink-0">
             <button
               onClick={() => scrollToSection("hero")}
-              className={`text-xl font-bold transition-colors duration-300 hover:text-blue-600 ${
+              className={`text-xl font-bold transition-colors duration-300 hover:text-[#1F6B7A] ${
                 isScrolled ? "text-gray-900" : "text-white"
               }`}
             >
@@ -64,7 +64,7 @@ export default function Header() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-blue-600 hover:scale-105 ${
+                  className={`px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-[#1F6B7A] hover:scale-105 ${
                     isScrolled ? "text-gray-700" : "text-white/90"
                   }`}
                 >
@@ -146,7 +146,7 @@ export default function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`block w-full text-center px-3 py-2 text-base font-medium transition-all duration-300 hover:text-blue-600 transform hover:translate-x-2 ${
+                className={`block w-full text-center px-3 py-2 text-base font-medium transition-all duration-300 hover:text-[#1F6B7A] transform hover:translate-x-2 ${
                   isScrolled ? "text-gray-700" : "text-white/90"
                 }`}
                 style={{

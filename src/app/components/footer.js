@@ -110,7 +110,7 @@ export default function Footer() {
     // Variáveis de interação do canvas (não usadas, removidas para evitar warnings)
     const RADIUS = 70;
     const QUANTITY = 18;
-    const palette = ["#3b82f6", "#a855f7", "#6366f1", "#818cf8", "#c7d2fe", "#f3f4f6"];
+    const palette = ["#12324A", "#1F6B7A", "#9FB3C0", "#D3DEE6", "#E7EDF1", "#F4F6F8"];
     let particles = [];
 
     function resize() {
@@ -145,10 +145,10 @@ export default function Footer() {
       ctx.clearRect(0, 0, width, height);
       // Luz difusa suave que segue o mouse
       ctx.save();
-      // Gradiente roxo escuro, harmonizando com o site
+      // Gradiente navy/teal, harmonizando com o site
       const grad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 80);
-      grad.addColorStop(0, "rgba(88,51,139,0.22)"); // Roxo escuro, mais intenso no centro
-      grad.addColorStop(1, "rgba(88,51,139,0)"); // Roxo escuro, transparente nas bordas
+      grad.addColorStop(0, "rgba(31,107,122,0.24)"); // teal sofisticado no centro
+      grad.addColorStop(1, "rgba(31,107,122,0)"); // transparente nas bordas
       ctx.globalAlpha = 1;
       ctx.beginPath();
       ctx.arc(mouseX, mouseY, 80, 0, Math.PI * 2, true);
@@ -179,7 +179,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={footerRef} className="bg-gray-900 text-white overflow-x-hidden relative">
+    <footer ref={footerRef} className="bg-[#0B1623] text-white overflow-x-hidden relative">
       {/* Canvas de partículas interativas */}
       <canvas
         ref={canvasRef}
@@ -260,7 +260,7 @@ export default function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-gray-400 hover:text-white transition-colors duration-300 p-2 hover:bg-gray-800 rounded-lg transform transition-transform duration-500 ${
+                    className={`text-gray-400 hover:text-white transition-all duration-500 p-2 hover:bg-[#12324A] rounded-lg transform ${
                       isVisible ? "scale-100" : "scale-0"
                     }`}
                     style={{ transitionDelay: `${800 + idx * 100}ms` }}

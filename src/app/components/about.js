@@ -145,9 +145,8 @@ export default function About() {
             }`}
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Criando experiências digitais que <span className="text-blue-600">convertem</span>
+              Criando experiências digitais que <span className="text-[#1F6B7A]">convertem</span>
             </h3>
-
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
                 Sou um <strong>desenvolvedor Full Stack</strong> especializado em UX/Product formado
@@ -169,22 +168,28 @@ export default function About() {
                 com seus clientes.
               </p>
             </div>
-
-            {/* Stats/números */}
-            <div className="grid grid-cols-3 gap-4 mt-8">
+            Stats/números
+            {/* Destaque de versatilidade e diferenciais */}
+            {/* <div className="grid grid-cols-1 gap-4 mt-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">2+</div>
-                <div className="text-sm text-gray-600">Anos Experiência</div>
+                <div className="text-lg text-gray-700 font-semibold mb-2">
+                  Projetos para diversos segmentos
+                </div>
+                <div className="text-sm text-gray-600">
+                  Sites institucionais, landing pages, portfólios, sistemas web e soluções
+                  personalizadas para empresas, profissionais e startups.
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">15+</div>
-                <div className="text-sm text-gray-600">Projetos Concluídos</div>
+                <div className="text-lg text-gray-700 font-semibold mb-2">
+                  Foco em resultado e experiência
+                </div>
+                <div className="text-sm text-gray-600">
+                  Design funcional, tecnologia atual e atendimento próximo para entregar sites que
+                  realmente funcionam para o seu negócio.
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">100%</div>
-                <div className="text-sm text-gray-600">Satisfação Cliente</div>
-              </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Coluna 2: Imagem pessoal no mesmo card do showcase */}
@@ -194,7 +199,7 @@ export default function About() {
             } flex items-center justify-center w-full h-full`}
           >
             <div
-              className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl shadow-xl overflow-hidden flex items-center justify-center w-full h-full"
+              className="bg-gradient-to-br from-[#F4F6F8] to-[#E7EDF1] rounded-3xl shadow-xl overflow-hidden flex items-center justify-center w-full h-full"
               style={{ aspectRatio: "5/4", maxWidth: "400px", minWidth: "260px" }}
             >
               <img
@@ -216,9 +221,9 @@ export default function About() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
+              className="bg-gradient-to-r from-[#F4F6F8] to-[#E7EDF1] p-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="text-blue-600 mb-4">{feature.icon}</div>
+              <div className="text-[#1F6B7A] mb-4">{feature.icon}</div>
               <h4 className="font-semibold text-gray-900 mb-2">{feature.title}</h4>
               <p className="text-gray-600 text-sm">{feature.description}</p>
             </div>
@@ -236,7 +241,7 @@ export default function About() {
             {skills.map((skill, index) => (
               <span
                 key={index}
-                className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 text-gray-800 text-sm font-semibold border border-gray-200"
+                className="px-4 py-2 rounded-full bg-gradient-to-r from-[#F4F6F8] to-[#E7EDF1] text-gray-800 text-sm font-semibold border border-gray-200"
               >
                 {skill}
               </span>

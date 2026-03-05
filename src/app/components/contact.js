@@ -152,7 +152,7 @@ export default function Contact() {
       title: "Website",
       description: "vempracaapp.com",
       action: "https://vempracaapp.com",
-      color: "text-blue-600",
+      color: "text-[#1F6B7A]",
     },
   ];
 
@@ -184,7 +184,7 @@ export default function Contact() {
             <div className="relative flex p-1 bg-gray-100 rounded-full max-w-full">
               {/* Slider animado - fundo que desliza */}
               <div
-                className={`absolute top-1 bottom-1 w-1/2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-md transition-all duration-500 ease-in-out transform ${
+                className={`absolute top-1 bottom-1 w-1/2 bg-gradient-to-r from-[#12324A] to-[#1F6B7A] rounded-full shadow-md transition-all duration-500 ease-in-out transform ${
                   activeTab === "form" ? "translate-x-0" : "translate-x-full"
                 }`}
               />
@@ -221,7 +221,7 @@ export default function Contact() {
             } ${activeTab === "form" ? "block" : "hidden lg:block"}`}
           >
             <div
-              className={`bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-8 rounded-2xl shadow-2xl h-full flex flex-col transition-all duration-700 transform ${
+              className={`bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#1A3F56] p-8 rounded-2xl shadow-2xl h-full flex flex-col transition-all duration-700 transform ${
                 formCardVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
               }`}
             >
@@ -303,7 +303,7 @@ export default function Contact() {
                   disabled={isSubmitting}
                   variant="outline"
                   size="lg"
-                  className="w-full py-4 bg-white text-purple-900 border-white hover:bg-white/90 hover:text-purple-800"
+                  className="w-full py-4 bg-white text-[#12324A] border-white hover:bg-[#E7EDF1] hover:text-[#1F6B7A]"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center gap-2">
@@ -344,7 +344,7 @@ export default function Contact() {
                     href={method.action}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all duration-300 group"
+                    className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-[#9FB3C0] hover:shadow-md transition-all duration-300 group"
                   >
                     <div
                       className={`${method.color} mr-4 group-hover:scale-110 transition-transform duration-300`}
@@ -355,7 +355,7 @@ export default function Contact() {
                       <h4 className="font-semibold text-gray-900">{method.title}</h4>
                       <p className="text-gray-600">{method.description}</p>
                     </div>
-                    <div className="ml-auto text-gray-400 group-hover:text-blue-600 transition-colors duration-300">
+                    <div className="ml-auto text-gray-400 group-hover:text-[#1F6B7A] transition-colors duration-300">
                       <svg
                         className="w-5 h-5"
                         fill="none"
@@ -375,10 +375,10 @@ export default function Contact() {
               </div>
 
               {/* Informações adicionais */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl">
+              <div className="bg-gradient-to-r from-[#F4F6F8] to-[#E7EDF1] p-6 rounded-xl">
                 <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-blue-600"
+                    className="w-5 h-5 text-[#1F6B7A]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -413,8 +413,8 @@ export default function Contact() {
               </div>
 
               {/* Tempo de resposta */}
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <p className="text-blue-800 font-medium flex items-center justify-center gap-2">
+              <div className="text-center p-4 bg-[#E7EDF1] rounded-lg">
+                <p className="text-[#12324A] font-medium flex items-center justify-center gap-2">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
@@ -439,7 +439,7 @@ export default function Contact() {
             onClick={() => setShowModal(false)}
           ></div>
           {/* Card modal */}
-          <div className="relative z-10 max-w-sm w-full mx-auto rounded-2xl shadow-2xl border border-white/10 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-8 flex flex-col items-center animate-fade-in">
+          <div className="relative z-10 max-w-sm w-full mx-auto rounded-2xl shadow-2xl border border-white/10 bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#1A3F56] p-8 flex flex-col items-center animate-fade-in">
             {submitStatus === "success" ? (
               <>
                 <svg
@@ -452,11 +452,11 @@ export default function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <h3 className="text-2xl font-bold text-white mb-2">Mensagem enviada!</h3>
-                <p className="text-base text-blue-100 mb-6 text-center">
+                <p className="text-base text-[#D3DEE6] mb-6 text-center">
                   Recebi sua mensagem e retornarei em breve. Obrigado pelo contato!
                 </p>
                 <button
-                  className="mt-2 px-6 py-3 rounded-full bg-white text-purple-900 font-semibold shadow hover:bg-blue-50 transition-all"
+                  className="mt-2 px-6 py-3 rounded-full bg-white text-[#12324A] font-semibold shadow hover:bg-[#E7EDF1] transition-all"
                   onClick={() => setShowModal(false)}
                 >
                   Fechar
@@ -474,11 +474,11 @@ export default function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
                 <h3 className="text-2xl font-bold text-white mb-2">Erro ao enviar</h3>
-                <p className="text-base text-blue-100 mb-6 text-center">
+                <p className="text-base text-[#D3DEE6] mb-6 text-center">
                   Não foi possível enviar sua mensagem. Verifique os campos e tente novamente.
                 </p>
                 <button
-                  className="mt-2 px-6 py-3 rounded-full bg-white text-purple-900 font-semibold shadow hover:bg-blue-50 transition-all"
+                  className="mt-2 px-6 py-3 rounded-full bg-white text-[#12324A] font-semibold shadow hover:bg-[#E7EDF1] transition-all"
                   onClick={() => setShowModal(false)}
                 >
                   Fechar

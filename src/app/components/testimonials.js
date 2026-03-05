@@ -23,7 +23,7 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       id="testimonials"
-      className={`relative py-20 w-full bg-gradient-to-br from-purple-50 via-blue-50 to-white overflow-x-hidden transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      className={`relative py-20 w-full bg-gradient-to-br from-[#F4F6F8] via-[#E7EDF1] to-white overflow-x-hidden transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
     >
       <div className="max-w-3xl mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">
@@ -58,7 +58,7 @@ export default function Testimonials() {
                     href={t.source}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-[#1F6B7A] hover:underline"
                   >
                     Ver na fonte
                   </a>

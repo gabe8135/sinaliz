@@ -80,9 +80,9 @@ export default function IconsShowcase({
       role="img"
       aria-label="Ícones de tecnologias com transição estilo TV antiga"
     >
-      {/* Camada de vidro + leve roxo */}
+      {/* Camada de vidro + leve navy/teal */}
       <div className="absolute inset-0 rounded-2xl bg-black/30 backdrop-blur-xl ring-1 ring-white/10" />
-      <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-br from-purple-500/5 via-transparent to-purple-900/5 mix-blend-screen" />
+      <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-br from-[#1F6B7A]/10 via-transparent to-[#12324A]/10 mix-blend-screen" />
 
       {/* Conteúdo do ícone atual */}
       <div className="relative z-10 w-full h-full grid place-items-center">
@@ -142,7 +142,7 @@ function renderTechIcon(name) {
     ["css3", { Icon: SiCss3, className: "text-blue-500" }],
     ["mongodb", { Icon: SiMongodb, className: "text-green-500" }],
     ["docker", { Icon: SiDocker, className: "text-sky-400" }],
-    ["vite", { Icon: SiVite, className: "text-purple-400" }],
+    ["vite", { Icon: SiVite, className: "text-[#9FB3C0]" }],
     ["supabase", { Icon: SiSupabase, className: "text-emerald-400" }],
     ["prisma", { Icon: SiPrisma, className: "text-white" }],
     ["express", { Icon: SiExpress, className: "text-white" }],

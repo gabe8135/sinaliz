@@ -49,7 +49,7 @@ export default function Hero() {
     const ARMS = 4;
     const ARM_SPREAD = (Math.PI * 2) / ARMS;
     const SPIRAL_TIGHTNESS = 0.12;
-    const STAR_COLORS = ["#fff", "#c7d2fe", "#818cf8", "#a855f7", "#f3f4f6", "#6366f1"];
+    const STAR_COLORS = ["#ffffff", "#d9e2e8", "#a9bcc9", "#7e98a8", "#1f6b7a", "#9fb3c0"];
     let stars = [];
 
     function createGalaxy() {
@@ -83,8 +83,8 @@ export default function Hero() {
       // Fundo escuro espacial
       ctx.save();
       const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#0d0a1f"); // azul/roxo bem escuro
-      grad.addColorStop(1, "#140a22"); // roxo profundo
+      grad.addColorStop(0, "#0B1623"); // azul petróleo escuro
+      grad.addColorStop(1, "#12324A"); // navy institucional
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
       ctx.restore();
@@ -150,7 +150,7 @@ export default function Hero() {
       {/* Background gradient customizado com overlay */}
       <div
         ref={parallaxRef}
-        className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-gray-900 z-0"
+        className="absolute inset-0 bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#0F2234] z-0"
         style={{ transform: `translateY(${parallaxY * 0.1}px)` }}
       >
         <div className="absolute inset-0 bg-black/20"></div>
@@ -174,27 +174,27 @@ export default function Hero() {
           }`}
         >
           {/* Saudação de entrada */}
-          <p className="text-blue-300 text-lg md:text-xl mb-4 font-medium">Olá! Eu sou</p>
+          <p className="text-[#B8CAD4] text-lg md:text-xl mb-4 font-medium">Olá! Eu sou</p>
 
           {/* Nome principal com gradient typography */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#9FB3C0] to-[#5A8DA0] bg-clip-text text-transparent">
               Gabriel Ramos
             </span>
           </h1>
 
           {/* Título profissional */}
           <h2 className="text-xl md:text-3xl lg:text-4xl text-gray-300 mb-8 font-light">
-            Desenvolvedor Full Stack & UX Product
+            Desenvolvedor Fullstack / UX Designer
           </h2>
 
           {/* Descrição das especialidades */}
           <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Com experiência em{" "}
-            <span className="text-blue-300 font-semibold">produtos digitais</span> e{" "}
-            <span className="text-purple-300 font-semibold">construção de marcas</span>, ajudo
-            empresas e pessoas a transformar ideias em soluções web que unem tecnologia, design e
-            estratégia. Meu foco é entregar valor real, com visão prática e colaborativa.
+            Transformo ideias em sites modernos, rápidos e fáceis de usar. Com experiência em
+            projetos digitais, ajudo empresas e profissionais a ter presença online de verdade, com
+            soluções sob medida, design funcional e tecnologia de ponta. Meu compromisso é entregar
+            sites que realmente funcionam para o seu negócio, sem promessas exageradas só trabalho
+            sério, transparente e eficiente.
           </p>
 
           {/* Botões de call-to-action */}
@@ -248,15 +248,15 @@ export default function Hero() {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block">
         <div className="flex space-x-8 text-center">
           <div className="text-white">
-            <p className="text-2xl font-bold text-blue-400">3+</p>
+            <p className="text-2xl font-bold text-[#9FB3C0]">3+</p>
             <p className="text-sm text-gray-400">Anos Experiência</p>
           </div>
           <div className="text-white">
-            <p className="text-2xl font-bold text-purple-400">15+</p>
+            <p className="text-2xl font-bold text-[#1F6B7A]">15+</p>
             <p className="text-sm text-gray-400">Projetos Concluídos</p>
           </div>
           <div className="text-white">
-            <p className="text-2xl font-bold text-indigo-400">100%</p>
+            <p className="text-2xl font-bold text-[#2F7D57]">100%</p>
             <p className="text-sm text-gray-400">Satisfação</p>
           </div>
         </div>
