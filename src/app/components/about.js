@@ -1,7 +1,6 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-// eslint-disable-next-line no-unused-vars
-import IconsShowcase from "./ui/TechShowcase";
 
 export default function About() {
   // Estados para controle de animações
@@ -168,9 +167,8 @@ export default function About() {
                 com seus clientes.
               </p>
             </div>
-            Stats/números
             {/* Destaque de versatilidade e diferenciais */}
-            {/* <div className="grid grid-cols-1 gap-4 mt-8">
+            <div className="grid grid-cols-1 gap-4 mt-8">
               <div className="text-center">
                 <div className="text-lg text-gray-700 font-semibold mb-2">
                   Projetos para diversos segmentos
@@ -189,7 +187,7 @@ export default function About() {
                   realmente funcionam para o seu negócio.
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
 
           {/* Coluna 2: Imagem pessoal no mesmo card do showcase */}
@@ -202,9 +200,14 @@ export default function About() {
               className="bg-gradient-to-br from-[#F4F6F8] to-[#E7EDF1] rounded-3xl shadow-xl overflow-hidden flex items-center justify-center w-full h-full"
               style={{ aspectRatio: "5/4", maxWidth: "400px", minWidth: "260px" }}
             >
-              <img
+              <Image
                 src="/images/about/eu.webp"
                 alt="Gabriel Ramos"
+                width={622}
+                height={497}
+                sizes="(max-width: 1024px) 100vw, 400px"
+                quality={75}
+                loading="lazy"
                 className="object-cover w-full h-full"
                 style={{ aspectRatio: "5/4" }}
               />

@@ -1,41 +1,18 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Button from "./ui/Button";
 import ContactButton from "./ui/ContactButton";
 
 export default function Hero() {
   const canvasRef = useRef(null);
-  // Estado para controlar animações de entrada
-  const [isVisible, setIsVisible] = useState(false);
-  const parallaxRef = useRef(null);
-  const [parallaxY, setParallaxY] = useState(0);
+  const isVisible = true;
   // ...existing code...
-
-  // Trigger para animação suave após mount do componente
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Efeito parallax no background decorativo
-  useEffect(() => {
-    const handleScroll = () => {
-      if (parallaxRef.current) {
-        const rect = parallaxRef.current.getBoundingClientRect();
-        // Parallax relativo à posição da hero na viewport
-        const relativeY = -rect.top; // quanto a hero já subiu na tela
-        setParallaxY(relativeY * 0.6); // intensidade aumentada
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Efeito partículas interativas com canvas
   useEffect(() => {
     let frame = null;
+    let idleId = null;
+    let timeoutId = null;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -44,12 +21,38 @@ export default function Hero() {
     canvas.width = width;
     canvas.height = height;
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobileView = window.matchMedia("(max-width: 767px)").matches;
+    const hasSaveData =
+      typeof navigator !== "undefined" &&
+      navigator.connection &&
+      navigator.connection.saveData === true;
+    const lowPowerDevice =
+      typeof navigator !== "undefined" &&
+      typeof navigator.hardwareConcurrency === "number" &&
+      navigator.hardwareConcurrency <= 4;
+
+    const skipCanvasAnimation =
+      prefersReducedMotion || (isMobileView && (hasSaveData || lowPowerDevice));
+
+    if (skipCanvasAnimation) {
+      const grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, "#0B1623");
+      grad.addColorStop(1, "#12324A");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+      return;
+    }
+
     // Parâmetros da galáxia
-    const STAR_COUNT = 180;
+    const STAR_COUNT = isMobileView ? 96 : 180;
     const ARMS = 4;
     const ARM_SPREAD = (Math.PI * 2) / ARMS;
     const SPIRAL_TIGHTNESS = 0.12;
     const STAR_COLORS = ["#ffffff", "#d9e2e8", "#a9bcc9", "#7e98a8", "#1f6b7a", "#9fb3c0"];
+    const targetFps = isMobileView ? 30 : 60;
+    const frameInterval = 1000 / targetFps;
+    let lastTs = 0;
     let stars = [];
 
     function createGalaxy() {
@@ -79,6 +82,17 @@ export default function Hero() {
     }
 
     function loop(ts) {
+      if (ts - lastTs < frameInterval) {
+        frame = requestAnimationFrame(loop);
+        return;
+      }
+      lastTs = ts;
+
+      if (document.hidden) {
+        frame = requestAnimationFrame(loop);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
       // Fundo escuro espacial
       ctx.save();
@@ -120,12 +134,30 @@ export default function Hero() {
       createGalaxy();
     }
 
-    window.addEventListener("resize", resize);
-    createGalaxy();
-    loop(0);
+    const startAnimation = () => {
+      createGalaxy();
+      loop(0);
+    };
+
+    window.addEventListener("resize", resize, { passive: true });
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(startAnimation, { timeout: 1200 });
+    } else {
+      timeoutId = window.setTimeout(startAnimation, 250);
+    }
+
     return () => {
       window.removeEventListener("resize", resize);
-      cancelAnimationFrame(frame);
+      if (idleId !== null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+      }
+      if (frame !== null) {
+        cancelAnimationFrame(frame);
+      }
     };
   }, []);
 
@@ -148,11 +180,7 @@ export default function Hero() {
     >
       {/* Canvas de partículas interativas */}
       {/* Background gradient customizado com overlay */}
-      <div
-        ref={parallaxRef}
-        className="absolute inset-0 bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#0F2234] z-0"
-        style={{ transform: `translateY(${parallaxY * 0.1}px)` }}
-      >
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#0F2234] z-0">
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
       {/* Canvas de partículas interativas */}

@@ -99,17 +99,34 @@ export default function Footer() {
   };
 
   useEffect(() => {
+    if (!isVisible) return;
+
     let frame = null;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const footerEl = footerRef.current;
+    if (!canvas || !footerEl) return;
+
     const ctx = canvas.getContext("2d");
     let width = window.innerWidth;
     let height = 0;
     let mouseX = width / 2;
     let mouseY = height / 2;
+    let footerTop = 0;
     // Variáveis de interação do canvas (não usadas, removidas para evitar warnings)
     const RADIUS = 70;
     const QUANTITY = 18;
+    const isMobileView = window.matchMedia("(max-width: 767px)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasSaveData =
+      typeof navigator !== "undefined" &&
+      navigator.connection &&
+      navigator.connection.saveData === true;
+    const lowPowerDevice =
+      typeof navigator !== "undefined" &&
+      typeof navigator.hardwareConcurrency === "number" &&
+      navigator.hardwareConcurrency <= 4;
+    const useStaticCanvas =
+      prefersReducedMotion || (isMobileView && (hasSaveData || lowPowerDevice));
     const palette = ["#12324A", "#1F6B7A", "#9FB3C0", "#D3DEE6", "#E7EDF1", "#F4F6F8"];
     let particles = [];
 
@@ -118,8 +135,10 @@ export default function Footer() {
       // Pega altura real do footer
       if (canvas.parentElement) {
         height = canvas.parentElement.offsetHeight;
+        footerTop = canvas.parentElement.getBoundingClientRect().top;
       } else {
         height = 220;
+        footerTop = 0;
       }
       canvas.width = width;
       canvas.height = height;
@@ -160,23 +179,35 @@ export default function Footer() {
       frame = requestAnimationFrame(loop);
     }
 
-    function mouseMove(e) {
+    function pointerMove(e) {
       mouseX = e.clientX;
-      mouseY = e.clientY - (window.innerHeight - height); // ajusta para o footer
+      mouseY = e.clientY - footerTop;
     }
     // ...existing code...
 
-    window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("resize", resize);
     resize();
+    if (useStaticCanvas) {
+      const grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, "rgba(31,107,122,0.10)");
+      grad.addColorStop(1, "rgba(31,107,122,0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+      return;
+    }
+
+    footerEl.addEventListener("pointermove", pointerMove, { passive: true });
+    window.addEventListener("resize", resize, { passive: true });
     createParticles();
     loop();
+
     return () => {
-      window.removeEventListener("mousemove", mouseMove);
+      footerEl.removeEventListener("pointermove", pointerMove);
       window.removeEventListener("resize", resize);
-      cancelAnimationFrame(frame);
+      if (frame !== null) {
+        cancelAnimationFrame(frame);
+      }
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <footer ref={footerRef} className="bg-[#0B1623] text-white overflow-x-hidden relative">

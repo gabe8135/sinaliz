@@ -9,10 +9,12 @@ export default function Header() {
   // Detecta scroll para alterar estilo do header
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const shouldBeScrolled = window.scrollY > 50;
+      setIsScrolled((prev) => (prev === shouldBeScrolled ? prev : shouldBeScrolled));
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

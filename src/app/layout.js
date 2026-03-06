@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
-import Footer from "./components/footer";
+import DeferredFooter from "./components/DeferredFooter";
 import SwRegister from "./components/SwRegister";
 
 const geistSans = Geist({
@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Gabriel Ramos | Desenvolvedor Full Stack & UX Product",
+  title: "Gabriel Ramos | Desenvolvedor Fullstack & UX para Sites",
   description:
-    "Portfolio de Gabriel Ramos - Desenvolvedor Full Stack especializado em UX/Product com expertise em lançamento de produtos digitais e desenvolvimento de marcas.",
+    "Portfolio de Gabriel Ramos, desenvolvedor fullstack com foco em UX. Crio sites modernos, rapidos e orientados a resultado para empresas e profissionais.",
 };
 
 export default function RootLayout({ children }) {
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
         {children}
-        <Footer />
+        <DeferredFooter />
         <SwRegister />
       </body>
     </html>

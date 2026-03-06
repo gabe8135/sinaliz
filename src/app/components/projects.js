@@ -1,17 +1,10 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import Button from "./ui/Button";
 import ContactButton from "./ui/ContactButton";
 
 export default function Projects() {
-  // Detecta se está em mobile (apenas no cliente)
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   // Estado para controlar quais cards estão com tecnologias expandidas
   const [expandedTech, setExpandedTech] = useState({});
 
@@ -50,8 +43,6 @@ export default function Projects() {
       category: "fullstack backend mobile frontend",
       description:
         "Plataforma inovadora que conecta empresas locais com clientes, oferecendo sistema de marketplace, geolocalização e pagamentos integrados.",
-      longDescription:
-        "O VemPraCá App é uma solução completa para negócios locais, desenvolvida com Next.js 15.2.4, React, Supabase, PostgreSQL e TailwindCSS. Utiliza Radix UI para componentes acessíveis, Swiper para carrosséis, Google Analytics GA4 e Google Tag Manager para análise e gestão de tags, hospedagem na Vercel, Webpack para build, HSTS para segurança e Priority Hints para performance.",
       image: "/images/projects/vempraca.webp",
       technologies: [
         "Next.js",
@@ -81,8 +72,6 @@ export default function Projects() {
       category: "fullstack backend mobile frontend",
       description:
         "Loja virtual e mostruário online para joalheria, com catálogo de produtos, design elegante e responsivo.",
-      longDescription:
-        "O Bella Pratas é um mostruário online para uma loja de pratas e joalheria, desenvolvido com Next.js 15.3.5, React, Supabase, PostgreSQL e TailwindCSS. Utiliza Radix UI para componentes acessíveis, Font Awesome para ícones, hospedagem na Vercel, Webpack para build, HSTS para segurança, e Priority Hints para performance.",
       image: "/images/projects/bella-pratas.webp",
       technologies: [
         "Next.js",
@@ -110,8 +99,6 @@ export default function Projects() {
       category: "fullstack mobile frontend",
       description:
         "Site empresarial moderno para a Geomind, com animações, performance e recursos avançados.",
-      longDescription:
-        "O site institucional da Geomind foi desenvolvido com Next.js 15.4.4, React, Tailwind CSS, Framer Motion e Vercel. Conta com recursos de PWA, Open Graph, Webpack, HSTS, Priority Hints e foco em performance e segurança.",
       image: "/images/projects/geomind.webp",
       technologies: [
         "React",
@@ -138,8 +125,6 @@ export default function Projects() {
       category: "frontend",
       description:
         "Landing page moderna e otimizada para conversão, com animações suaves e design responsivo para empresa de tecnologia.",
-      longDescription:
-        "Landing page desenvolvida com foco em performance e conversão, utilizando Bootstrap 5.3.0, AOS para animações, Font Awesome 6.5.0, hospedagem na Netlify, e recursos de segurança como HSTS. Utiliza Google Analytics GA4, Google Tag Manager, e CDNs como Cloudflare, cdnjs e jsDelivr para performance.",
       image: "/images/projects/landin.webp",
       technologies: [
         "Bootstrap",
@@ -166,8 +151,6 @@ export default function Projects() {
       category: "fullstack backend frontend",
       description:
         "Dashboard analítico para acompanhamento das avaliações dos estandes gastronômicos da Festa Caiçara, usando a plataforma VemPraCa como ferramenta central.",
-      longDescription:
-        "Desenvolvimento de sistema de métricas e relatórios em tempo real para o evento, com QR Codes individuais, gráficos de engajamento, exportação de dados e insights para os organizadores. Case de uso avançado do VemPraCa em eventos públicos.",
       image: "/images/projects/dados.webp", // Troque para o caminho real da imagem
       technologies: ["VemPraCa", "Next.js", "Supabase", "Chart.js", "Analytics"],
       links: {
@@ -183,8 +166,6 @@ export default function Projects() {
       category: "fullstack backend frontend",
       description:
         "Página de agendamento de consultas para clínica multidisciplinar, com foco em Nutrição e Psicologia. Interface intuitiva, moderna e pensada para facilitar o acesso dos pacientes às especialidades.",
-      longDescription:
-        "O projeto BemViver foi desenvolvido para conectar pacientes às especialidades de Nutrição e Psicologia, oferecendo agendamento online, informações detalhadas e uma experiência acolhedora. Utiliza React e Next.js 14.2.33 para performance e SEO, Tailwind CSS para design responsivo, Framer Motion para animações suaves, hospedagem na Vercel, Webpack para build, HSTS para segurança e Priority Hints para otimização. O site reflete o cuidado e a atenção da clínica com cada paciente.",
       image: "/images/projects/bemviver.webp",
       technologies: [
         "React",
@@ -223,30 +204,46 @@ export default function Projects() {
 
   useEffect(() => {
     cardRefs.current = cardRefs.current.slice(0, filteredProjects.length);
-    const observers = cardRefs.current.map((ref, idx) => {
-      if (!ref) return null;
-      return new window.IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setCardsVisible((prev) => {
-              const updated = [...prev];
-              updated[idx] = true;
-              return updated;
-            });
+    setCardsVisible([]);
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        const visibleIndexes = [];
+
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const rawIndex = entry.target.dataset.cardIndex;
+          const index = Number(rawIndex);
+          if (!Number.isNaN(index)) {
+            visibleIndexes.push(index);
+            observer.unobserve(entry.target);
           }
-        },
-        // Dispara mais cedo: baixa sensibilidade e rootMargin positivo
-        // para iniciar a animação antes do card entrar totalmente na viewport
-        { threshold: 0, rootMargin: "0px 0px 300px 0px" }
-      );
+        });
+
+        if (visibleIndexes.length > 0) {
+          setCardsVisible((prev) => {
+            const updated = [...prev];
+            visibleIndexes.forEach((index) => {
+              updated[index] = true;
+            });
+            return updated;
+          });
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: "0px 0px 300px 0px",
+      }
+    );
+
+    cardRefs.current.forEach((ref, index) => {
+      if (!ref) return;
+      ref.dataset.cardIndex = String(index);
+      observer.observe(ref);
     });
-    cardRefs.current.forEach((ref, idx) => {
-      if (ref && observers[idx]) observers[idx].observe(ref);
-    });
+
     return () => {
-      observers.forEach((observer, idx) => {
-        if (observer && cardRefs.current[idx]) observer.disconnect();
-      });
+      observer.disconnect();
     };
   }, [filteredProjects.length]);
 
@@ -304,15 +301,7 @@ export default function Projects() {
               ref={(el) => (cardRefs.current[index] = el)}
               className={`group relative flex flex-col h-full rounded-3xl overflow-hidden transition-all duration-500 border border-[#D3DEE6] bg-white/85 backdrop-blur-sm min-w-0 shadow-[0_16px_40px_-22px_rgba(18,50,74,0.45)]
                 ${cardsVisible[index] ? "opacity-100 blur-0" : "opacity-0 blur-[2px]"}
-                ${
-                  isMobile
-                    ? cardsVisible[index]
-                      ? "translate-y-0 scale-100"
-                      : "translate-y-8 scale-[0.98]"
-                    : cardsVisible[index]
-                      ? "translate-y-0 scale-100"
-                      : "translate-y-10 scale-[0.98]"
-                }
+                ${cardsVisible[index] ? "translate-y-0 scale-100" : "translate-y-10 scale-[0.98]"}
                 motion-safe:hover:-translate-y-2 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-[0_24px_54px_-24px_rgba(18,50,74,0.55)] motion-safe:hover:border-[#9FB3C0]
               `}
               style={{
@@ -340,9 +329,14 @@ export default function Projects() {
               {/* Imagem do projeto ou placeholder */}
               <div className="relative z-10 h-44 sm:h-48 lg:h-52 bg-[#F7FAFC] flex items-center justify-center overflow-hidden">
                 {project.image && project.image !== "/api/placeholder/600/400" ? (
-                  <img
+                  <Image
                     src={project.image}
                     alt={project.title}
+                    width={640}
+                    height={420}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={72}
+                    loading="lazy"
                     className="object-cover h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                 ) : (
