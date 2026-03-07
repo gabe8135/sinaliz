@@ -1,4 +1,5 @@
 import Hero from "./components/hero";
+import Differentials from "./components/differentials";
 import DeferredAbout from "./components/DeferredAbout";
 import DeferredProjects from "./components/DeferredProjects";
 import DeferredContact from "./components/DeferredContact";
@@ -11,6 +12,7 @@ export default function Home() {
     <main className="bg-gradient-to-br from-[#F4F6F8] via-[#E7EDF1] to-white min-h-screen">
       <Hero />
       <DeferredProjects />
+      <Differentials />
       <DeferredTestimonials />
       <DeferredAbout />
       <DeferredContact />
