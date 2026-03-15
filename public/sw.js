@@ -1,10 +1,21 @@
-const CACHE_NAME = "webfolio-static-v1";
-const PRECACHE_URLS = ["/", "/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
+const CACHE_NAME = "webfolio-runtime-v3";
+const CACHE_PREFIX = "webfolio-";
+const PRECACHE_URLS = ["/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
+
+function shouldHandleRuntimeAsset(pathname) {
+  return (
+    pathname.startsWith("/_next/static/") ||
+    pathname.startsWith("/images/") ||
+    pathname.startsWith("/fonts/") ||
+    pathname.startsWith("/videos/") ||
+    pathname === "/manifest.json"
+  );
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS);
+      return cache.addAll(PRECACHE_URLS).catch(() => undefined);
     })
   );
   self.skipWaiting();
@@ -12,44 +23,86 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
+          if (key !== CACHE_NAME && key.startsWith(CACHE_PREFIX)) {
+            return caches.delete(key);
+          }
+          return Promise.resolve();
         })
-      )
-    )
+      );
+      await self.clients.claim();
+    })()
   );
-  self.clients.claim();
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("fetch", (event) => {
   const { request } = event;
-  // Apenas GETs
   if (request.method !== "GET") return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Requisições de navegação sempre priorizam rede para evitar servir HTML antigo.
+  if (request.mode === "navigate") {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        try {
+          const fresh = await fetch(request, { cache: "no-store" });
+          if (fresh && fresh.ok) {
+            cache.put(request, fresh.clone());
+          }
+          return fresh;
+        } catch {
+          const cached = await cache.match(request);
+          if (cached) return cached;
+          return new Response(
+            "<html><body><h1>Offline</h1><p>Você está offline.</p></body></html>",
+            { headers: { "Content-Type": "text/html" } }
+          );
+        }
+      })()
+    );
+    return;
+  }
+
+  if (!shouldHandleRuntimeAsset(url.pathname)) {
+    return;
+  }
+
+  // Para assets estáticos, usa stale-while-revalidate para manter performance.
   event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(request);
+
+      const networkPromise = fetch(request)
         .then((response) => {
-          // Opcional: cachear respostas de mesma origem
-          if (response && response.status === 200 && request.url.startsWith(self.location.origin)) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          if (response && response.ok) {
+            cache.put(request, response.clone());
           }
           return response;
         })
-        .catch(() => {
-          // Fallback para navegadores sem rede: se for navegação, entregar index.html não disponível em Next,
-          // mas podemos retornar um simples Response informando offline.
-          if (request.mode === "navigate") {
-            return new Response(
-              "<html><body><h1>Offline</h1><p>Você está offline.</p></body></html>",
-              { headers: { "Content-Type": "text/html" } }
-            );
-          }
-          return new Response(null, { status: 503, statusText: "Service Unavailable" });
-        });
-    })
+        .catch(() => null);
+
+      if (cached) {
+        event.waitUntil(networkPromise);
+        return cached;
+      }
+
+      const networkResponse = await networkPromise;
+      if (networkResponse) return networkResponse;
+
+      return new Response(null, { status: 503, statusText: "Service Unavailable" });
+    })()
   );
 });

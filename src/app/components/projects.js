@@ -258,6 +258,64 @@ export default function Projects() {
       id="projects"
       className="py-20 bg-gradient-to-br from-[#F4F6F8] via-[#E7EDF1] to-white overflow-x-hidden w-full"
     >
+      <style>{`
+        @keyframes projectCardFloatGlow {
+          0% {
+            transform: translate3d(-8%, -6%, 0) scale(1);
+            opacity: 0.32;
+          }
+          50% {
+            transform: translate3d(10%, 8%, 0) scale(1.08);
+            opacity: 0.5;
+          }
+          100% {
+            transform: translate3d(-8%, -6%, 0) scale(1);
+            opacity: 0.32;
+          }
+        }
+        @keyframes projectCardBeam {
+          0% {
+            transform: translateX(-130%);
+            opacity: 0;
+          }
+          20% {
+            opacity: 0.55;
+          }
+          60% {
+            opacity: 0.18;
+          }
+          100% {
+            transform: translateX(170%);
+            opacity: 0;
+          }
+        }
+        @keyframes projectToplineShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 200% 50%;
+          }
+        }
+        .project-card-ambient {
+          animation: projectCardFloatGlow 9s ease-in-out infinite;
+        }
+        .project-card-beam {
+          animation: projectCardBeam 6.8s linear infinite;
+        }
+        .project-card-topline {
+          background-size: 200% 100%;
+          animation: projectToplineShift 4.8s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .project-card-ambient,
+          .project-card-beam,
+          .project-card-topline {
+            animation: none !important;
+            opacity: 0 !important;
+          }
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Cabeçalho da seção */}
         <div
@@ -299,10 +357,10 @@ export default function Projects() {
             <div
               key={project.id}
               ref={(el) => (cardRefs.current[index] = el)}
-              className={`group relative flex flex-col h-full rounded-3xl overflow-hidden transition-all duration-500 border border-[#D3DEE6] bg-white/85 backdrop-blur-sm min-w-0 shadow-[0_16px_40px_-22px_rgba(18,50,74,0.45)]
+              className={`group relative flex flex-col h-full rounded-3xl overflow-hidden transition-all duration-500 border border-[#bdc7d3] bg-gradient-to-br from-[#0B1522]/95 via-[#0E1A2A]/95 to-[#0B1623]/95 backdrop-blur-xl min-w-0 shadow-[0_20px_44px_-24px_rgba(0,0,0,0.7)]
                 ${cardsVisible[index] ? "opacity-100 blur-0" : "opacity-0 blur-[2px]"}
                 ${cardsVisible[index] ? "translate-y-0 scale-100" : "translate-y-10 scale-[0.98]"}
-                motion-safe:hover:-translate-y-2 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-[0_24px_54px_-24px_rgba(18,50,74,0.55)] motion-safe:hover:border-[#9FB3C0]
+                motion-safe:hover:-translate-y-2 motion-safe:hover:scale-[1.01] motion-safe:hover:shadow-[0_28px_60px_-26px_rgba(0,0,0,0.85)] motion-safe:hover:border-[#466078]
               `}
               style={{
                 transitionDelay: `${index * 100 + 500}ms`,
@@ -310,11 +368,19 @@ export default function Projects() {
             >
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(31,107,122,0.2),transparent_55%)]"
+                className="project-card-ambient pointer-events-none absolute -inset-16 bg-[radial-gradient(circle,rgba(90,141,160,0.22)_0%,transparent_62%)]"
               />
               <div
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#12324A] via-[#1F6B7A] to-[#9FB3C0]"
+                className="project-card-beam pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-[#7FA8BC]/15 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-35 transition-opacity duration-500 group-hover:opacity-65 bg-[radial-gradient(circle_at_top_right,rgba(127,168,188,0.28),transparent_58%)]"
+              />
+              <div
+                aria-hidden="true"
+                className="project-card-topline absolute inset-x-0 top-0 h-[2px] bg-[linear-gradient(90deg,rgba(18,50,74,0)_0%,rgba(127,168,188,0.95)_35%,rgba(31,107,122,0.95)_65%,rgba(18,50,74,0)_100%)]"
               />
 
               {/* Badge para projetos em destaque */}
@@ -327,7 +393,7 @@ export default function Projects() {
               )}
 
               {/* Imagem do projeto ou placeholder */}
-              <div className="relative z-10 h-44 sm:h-48 lg:h-52 bg-[#F7FAFC] flex items-center justify-center overflow-hidden">
+              <div className="relative z-10 h-44 sm:h-48 lg:h-52 bg-[#0A1320] flex items-center justify-center overflow-hidden">
                 {project.image && project.image !== "/api/placeholder/600/400" ? (
                   <Image
                     src={project.image}
@@ -340,7 +406,7 @@ export default function Projects() {
                     className="object-cover h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                 ) : (
-                  <div className="text-[#5E7685] text-center">
+                  <div className="text-[#9EB8C7] text-center">
                     <svg
                       className="w-16 h-16 mx-auto mb-2 opacity-80"
                       fill="currentColor"
@@ -360,8 +426,8 @@ export default function Projects() {
                   <span
                     className={`px-3 py-1 text-xs rounded-full font-semibold shadow-md ring-1 ${
                       project.status === "Concluído"
-                        ? "bg-green-100 text-green-800 ring-green-200"
-                        : "bg-[#E7EDF1] text-[#12324A] ring-[#C9D7E0]"
+                        ? "bg-emerald-500/15 text-emerald-300 ring-emerald-400/35"
+                        : "bg-[#1F6B7A]/18 text-[#BFD4DF] ring-[#5A8DA0]/40"
                     }`}
                   >
                     {project.status}
@@ -371,11 +437,11 @@ export default function Projects() {
 
               {/* Conteúdo do card estilizado */}
               <div className="relative z-10 p-6 sm:p-7 flex flex-1 flex-col">
-                <h3 className="text-xl sm:text-2xl leading-tight font-bold text-[#12324A] mb-2 min-h-[3rem]">
+                <h3 className="text-xl sm:text-2xl leading-tight font-bold text-[#E6EEF4] mb-2 min-h-[3rem]">
                   {project.title}
                 </h3>
 
-                <p className="mb-6 line-clamp-3 text-[15px] sm:text-base text-[#334155] leading-relaxed min-h-[4.5rem]">
+                <p className="mb-6 line-clamp-3 text-[15px] sm:text-base text-[#B5C6D2] leading-relaxed min-h-[4.5rem]">
                   {project.description}
                 </p>
 
@@ -387,14 +453,14 @@ export default function Projects() {
                   ).map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1.5 bg-gradient-to-r from-[#F4F6F8] to-[#E7EDF1] text-[#183247] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#D7E3EA]"
+                      className="px-3 py-1.5 bg-gradient-to-r from-white/[0.12] to-white/[0.06] text-[#D7E5EE] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#32465A]"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 3 && !expandedTech[project.id] && (
                     <button
-                      className="px-3 py-1.5 bg-gradient-to-r from-[#F4F6F8] via-[#E7EDF1] to-white text-[#183247] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#D7E3EA] hover:bg-[#DCE7EE] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2"
+                      className="px-3 py-1.5 bg-gradient-to-r from-white/[0.12] via-white/[0.08] to-white/[0.04] text-[#D7E5EE] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#32465A] hover:border-[#5A8DA0] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1623]"
                       onClick={() => toggleTech(project.id)}
                       aria-label={`Mostrar todas as tecnologias do projeto ${project.title}`}
                       type="button"
@@ -404,7 +470,7 @@ export default function Projects() {
                   )}
                   {project.technologies.length > 3 && expandedTech[project.id] && (
                     <button
-                      className="px-3 py-1.5 bg-gradient-to-r from-[#E7EDF1] via-[#D7E3EA] to-white text-[#12324A] text-xs rounded-full font-bold shadow-sm border-2 border-[#9FB3C0] hover:bg-[#DCE7EE] transition flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2"
+                      className="px-3 py-1.5 bg-gradient-to-r from-[#12324A]/55 via-[#1F6B7A]/50 to-[#0B1623]/70 text-[#E6EEF4] text-xs rounded-full font-bold shadow-sm border border-[#5A8DA0] hover:border-[#8FB0C0] transition flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1623]"
                       onClick={() => toggleTech(project.id)}
                       aria-label={`Ocultar tecnologias do projeto ${project.title}`}
                       type="button"
@@ -435,7 +501,7 @@ export default function Projects() {
                       onClick={() => openLink(project.links.live)}
                       variant="primary"
                       size="sm"
-                      className="sm:flex-1 text-sm"
+                      className="sm:flex-1 text-sm shadow-[0_12px_28px_rgba(0,0,0,0.4)]"
                     >
                       Ver Demo
                     </Button>
@@ -446,7 +512,7 @@ export default function Projects() {
                       onClick={() => openLink(project.links.github)}
                       variant="secondary"
                       size="sm"
-                      className="sm:flex-1 text-sm"
+                      className="sm:flex-1 text-sm !border-[#5A8DA0] !text-[#D4E1EA] hover:!bg-[#1F6B7A]/20 hover:!text-white"
                     >
                       GitHub
                     </Button>
