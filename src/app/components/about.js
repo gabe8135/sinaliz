@@ -321,7 +321,7 @@ export default function About() {
       </div>
 
       {/* Minhas Habilidades — Carrossel Coverflow */}
-      <div className="relative bg-[#050A12] my-3 py-16 border-t border-[#19293A] overflow-hidden">
+      <div className="relative bg-[#050A12] py-16 border-t border-[#19293A] overflow-hidden">
         <style>{`
           .skills-swiper {
             padding: 14px 0 22px;

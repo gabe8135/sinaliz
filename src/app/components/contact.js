@@ -157,8 +157,13 @@ export default function Contact() {
   ];
 
   return (
-    <section ref={sectionRef} id="contact" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} id="contact" className="relative overflow-hidden py-20 bg-white">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-14 h-24">
+        <div className="absolute inset-0 bg-white [clip-path:polygon(0_68%,100%_18%,100%_100%,0_100%)]" />
+        <div className="absolute inset-x-0 top-[60%] h-px bg-gradient-to-r from-transparent via-[#5A8DA0]/45 to-transparent" />
+        <div className="absolute left-1/2 top-[58%] h-8 w-[42%] -translate-x-1/2 bg-[#5A8DA0]/12 blur-xl" />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Título da seção */}
         <div
           className={`text-center mb-16 transition-all duration-1000 ${
