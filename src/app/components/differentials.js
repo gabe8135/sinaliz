@@ -112,12 +112,12 @@ export default function Differentials() {
             1024: { slidesPerView: 3.7, spaceBetween: 22 },
             1280: { slidesPerView: 4, spaceBetween: 24 },
           }}
-          className="!overflow-visible"
+          className="!overflow-visible [&_.swiper-wrapper]:items-stretch"
           aria-label="Carrossel de diferenciais profissionais"
         >
           {differentials.map((item) => (
-            <SwiperSlide key={item.title} className="h-auto pb-2">
-              <article className="group h-full rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] backdrop-blur-xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)] transition-all duration-500 hover:-translate-y-1 hover:border-[#3A516A] hover:shadow-[0_26px_46px_rgba(0,0,0,0.42)]">
+            <SwiperSlide key={item.title} className="!flex !h-auto pb-2">
+              <article className="group flex h-full flex-col rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#3A516A] hover:shadow-[0_26px_46px_rgba(0,0,0,0.42)]">
                 <div className="flex items-center gap-4">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#33495F] bg-[#0D1622] shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-105">
                     <item.Icon className={`h-6 w-6 ${item.iconClassName}`} aria-hidden="true" />
@@ -125,7 +125,9 @@ export default function Differentials() {
                   <h3 className="text-lg font-semibold text-[#E6EEF4]">{item.title}</h3>
                 </div>
 
-                <p className="mt-4 text-sm leading-relaxed text-[#B5C6D2]">{item.description}</p>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-[#B5C6D2]">
+                  {item.description}
+                </p>
 
                 <div className="mt-5 h-1.5 w-full rounded-full bg-gradient-to-r from-[#12324A] via-[#1F6B7A] to-[#8FB0C0] opacity-75 transition-opacity duration-300 group-hover:opacity-100" />
               </article>
