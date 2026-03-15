@@ -97,6 +97,7 @@ export default function Differentials() {
         <Swiper
           modules={[Autoplay]}
           loop={true}
+          loopAdditionalSlides={2}
           speed={1100}
           autoplay={{
             delay: 2400,
@@ -104,12 +105,12 @@ export default function Differentials() {
             pauseOnMouseEnter: true,
           }}
           spaceBetween={20}
-          slidesPerView={1.1}
+          slidesPerView={1.25}
           breakpoints={{
-            640: { slidesPerView: 1.5, spaceBetween: 20 },
-            768: { slidesPerView: 2.1, spaceBetween: 20 },
-            1024: { slidesPerView: 2.7, spaceBetween: 22 },
-            1280: { slidesPerView: 3, spaceBetween: 24 },
+            640: { slidesPerView: 2.2, spaceBetween: 20 },
+            768: { slidesPerView: 3.1, spaceBetween: 20 },
+            1024: { slidesPerView: 3.7, spaceBetween: 22 },
+            1280: { slidesPerView: 4, spaceBetween: 24 },
           }}
           className="!overflow-visible"
           aria-label="Carrossel de diferenciais profissionais"
