@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
+
 import {
   SiFigma,
   SiGoogle,
@@ -58,6 +60,28 @@ const differentials = [
 ];
 
 export default function Differentials() {
+  const carouselRef = useRef(null);
+  const [repeatCount, setRepeatCount] = useState(2);
+
+  useEffect(() => {
+    const calculateRepeatCount = () => {
+      const containerWidth = carouselRef.current?.offsetWidth || window.innerWidth || 0;
+      const estimatedVisibleCards = Math.max(1, Math.ceil(containerWidth / 320));
+      const requiredCards = estimatedVisibleCards * 2;
+      const nextRepeatCount = Math.max(2, Math.ceil(requiredCards / differentials.length));
+      setRepeatCount(nextRepeatCount);
+    };
+
+    calculateRepeatCount();
+    window.addEventListener("resize", calculateRepeatCount);
+    return () => window.removeEventListener("resize", calculateRepeatCount);
+  }, []);
+
+  const loopItems = useMemo(
+    () => Array.from({ length: repeatCount }, () => differentials).flat(),
+    [repeatCount]
+  );
+
   return (
     <section
       id="diferenciais"
@@ -94,46 +118,50 @@ export default function Differentials() {
           </p>
         </div>
 
-        <Swiper
-          modules={[Autoplay]}
-          loop={true}
-          loopAdditionalSlides={2}
-          speed={1100}
-          autoplay={{
-            delay: 2400,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          spaceBetween={20}
-          slidesPerView={1.25}
-          breakpoints={{
-            640: { slidesPerView: 2.2, spaceBetween: 20 },
-            768: { slidesPerView: 3.1, spaceBetween: 20 },
-            1024: { slidesPerView: 3.7, spaceBetween: 22 },
-            1280: { slidesPerView: 4, spaceBetween: 24 },
-          }}
-          className="!overflow-visible [&_.swiper-wrapper]:items-stretch"
-          aria-label="Carrossel de diferenciais profissionais"
-        >
-          {differentials.map((item) => (
-            <SwiperSlide key={item.title} className="!flex !h-auto pb-2">
-              <article className="group flex h-full flex-col rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#3A516A] hover:shadow-[0_26px_46px_rgba(0,0,0,0.42)]">
-                <div className="flex items-center gap-4">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#33495F] bg-[#0D1622] shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-105">
-                    <item.Icon className={`h-6 w-6 ${item.iconClassName}`} aria-hidden="true" />
+        <div ref={carouselRef}>
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            loopAdditionalSlides={Math.max(4, differentials.length)}
+            loopedSlides={loopItems.length}
+            speed={4200}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: false,
+              waitForTransition: true,
+            }}
+            spaceBetween={20}
+            slidesPerView={1.25}
+            breakpoints={{
+              640: { slidesPerView: 2.2, spaceBetween: 20 },
+              768: { slidesPerView: 3.1, spaceBetween: 20 },
+              1024: { slidesPerView: 3.7, spaceBetween: 22 },
+              1280: { slidesPerView: 4, spaceBetween: 24 },
+            }}
+            className="!overflow-visible [&_.swiper-wrapper]:items-stretch [&_.swiper-wrapper]:!ease-linear"
+            aria-label="Carrossel de diferenciais profissionais"
+          >
+            {loopItems.map((item, index) => (
+              <SwiperSlide key={`${item.title}-${index}`} className="!flex !h-auto pb-2">
+                <article className="group flex h-full flex-col rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] p-6 shadow-[0_20px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#3A516A] hover:shadow-[0_26px_46px_rgba(0,0,0,0.42)]">
+                  <div className="flex items-center gap-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#33495F] bg-[#0D1622] shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-105">
+                      <item.Icon className={`h-6 w-6 ${item.iconClassName}`} aria-hidden="true" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-[#E6EEF4]">{item.title}</h3>
                   </div>
-                  <h3 className="text-lg font-semibold text-[#E6EEF4]">{item.title}</h3>
-                </div>
 
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-[#B5C6D2]">
-                  {item.description}
-                </p>
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-[#B5C6D2]">
+                    {item.description}
+                  </p>
 
-                <div className="mt-5 h-1.5 w-full rounded-full bg-gradient-to-r from-[#12324A] via-[#1F6B7A] to-[#8FB0C0] opacity-75 transition-opacity duration-300 group-hover:opacity-100" />
-              </article>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                  <div className="mt-5 h-1.5 w-full rounded-full bg-gradient-to-r from-[#12324A] via-[#1F6B7A] to-[#8FB0C0] opacity-75 transition-opacity duration-300 group-hover:opacity-100" />
+                </article>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </section>
   );

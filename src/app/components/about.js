@@ -5,6 +5,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+import {
+  SiJavascript,
+  SiReact,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiTailwindcss,
+  SiPostgresql,
+  SiGit,
+  SiVercel,
+  SiNetlify,
+  SiWebpack,
+  SiFramer,
+  SiRadixui,
+  SiSupabase,
+  SiGoogleanalytics,
+  SiGoogletagmanager,
+} from "react-icons/si";
+import { createElement } from "react";
 
 export default function About() {
   // Estados para controle de animações
@@ -29,39 +47,26 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // Skills técnicas (somente nomes, sem barras ou porcentagens)
+  // Skills técnicas (nomes + ícones)
   const skills = [
-    // Linguagens e frameworks
-    "JavaScript",
-    "React",
-    "Next.js",
-    "Node.js",
-
-    // Backend e banco de dados
-    "Supabase",
-    "PostgreSQL",
-    "SQL",
-
-    // UI/UX e animações
-    "Tailwind CSS",
-    "Radix UI",
-    "Framer Motion",
-
-    // Build/deploy
-    "Webpack",
-    "Vercel",
-    "Netlify",
-
-    // PWA
-    "PWA",
-
-    // Analytics
-    "Google Analytics GA4",
-    "Google Tag Manager",
-
-    // Outras competências
-    "UX/UI Design",
-    "Git",
+    { name: "JavaScript", icon: SiJavascript },
+    { name: "React", icon: SiReact },
+    { name: "Next.js", icon: SiNextdotjs },
+    { name: "Node.js", icon: SiNodedotjs },
+    { name: "Supabase", icon: SiSupabase },
+    { name: "PostgreSQL", icon: SiPostgresql },
+    { name: "SQL", icon: SiPostgresql },
+    { name: "Tailwind CSS", icon: SiTailwindcss },
+    { name: "Radix UI", icon: SiRadixui },
+    { name: "Framer Motion", icon: SiFramer },
+    { name: "Webpack", icon: SiWebpack },
+    { name: "Vercel", icon: SiVercel },
+    { name: "Netlify", icon: SiNetlify },
+    { name: "PWA", icon: SiJavascript },
+    { name: "Google Analytics GA4", icon: SiGoogleanalytics },
+    { name: "Google Tag Manager", icon: SiGoogletagmanager },
+    { name: "UX/UI Design", icon: SiRadixui },
+    { name: "Git", icon: SiGit },
   ];
 
   // Principais diferenciais e características
@@ -371,9 +376,14 @@ export default function About() {
           >
             {skills.map((skill, i) => (
               <SwiperSlide key={i}>
-                <div className="skill-card min-h-[120px] rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.09] via-white/[0.05] to-white/[0.03] backdrop-blur-xl px-7 py-8 text-center shadow-[0_8px_20px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-grab flex items-center justify-center">
+                <div className="skill-card min-h-[120px] rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.09] via-white/[0.05] to-white/[0.03] backdrop-blur-xl px-7 py-8 text-center shadow-[0_8px_20px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-grab flex flex-col items-center justify-center gap-3">
+                  {skill.icon &&
+                    createElement(skill.icon, {
+                      className: "w-10 h-10 md:w-12 md:h-12 mb-2",
+                      "aria-hidden": true,
+                    })}
                   <span className="text-[#E6EEF4] font-semibold text-base md:text-lg leading-tight block select-none">
-                    {skill}
+                    {skill.name}
                   </span>
                 </div>
               </SwiperSlide>
