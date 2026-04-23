@@ -123,7 +123,6 @@ export default function Differentials() {
             modules={[Autoplay]}
             loop={true}
             loopAdditionalSlides={Math.max(4, differentials.length)}
-            loopedSlides={loopItems.length}
             speed={4200}
             autoplay={{
               delay: 0,

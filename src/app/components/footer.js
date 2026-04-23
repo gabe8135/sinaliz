@@ -267,10 +267,10 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contato</h4>
             <div className="space-y-2">
               <a
-                href="mailto:ramos.analista@gmail.com"
+                href="mailto:gabriel@synaliz.com"
                 className="text-gray-300 hover:text-white transition-colors duration-300 block"
               >
-                ramos.analista@gmail.com
+                gabriel@synaliz.com
               </a>
               <a
                 href="https://vempracaapp.com"

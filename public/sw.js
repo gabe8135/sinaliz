@@ -1,10 +1,9 @@
-const CACHE_NAME = "webfolio-runtime-v3";
+const CACHE_NAME = "webfolio-runtime-v4";
 const CACHE_PREFIX = "webfolio-";
 const PRECACHE_URLS = ["/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
 
 function shouldHandleRuntimeAsset(pathname) {
   return (
-    pathname.startsWith("/_next/static/") ||
     pathname.startsWith("/images/") ||
     pathname.startsWith("/fonts/") ||
     pathname.startsWith("/videos/") ||

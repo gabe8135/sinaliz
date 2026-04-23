@@ -123,8 +123,8 @@ export default function Contact() {
         </svg>
       ),
       title: "Email",
-      description: "ramos.analista@gmail.com",
-      action: "mailto:ramos.analista@gmail.com",
+      description: "gabriel@synaliz.com",
+      action: "mailto:gabriel@synaliz.com",
       color: "text-red-600",
     },
     {
