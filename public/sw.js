@@ -1,4 +1,4 @@
-const CACHE_NAME = "webfolio-runtime-v4";
+const CACHE_NAME = "webfolio-runtime-v5";
 const CACHE_PREFIX = "webfolio-";
 const PRECACHE_URLS = ["/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
 

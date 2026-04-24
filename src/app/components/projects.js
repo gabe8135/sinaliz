@@ -147,17 +147,17 @@ export default function Projects() {
     },
     {
       id: 4,
-      title: "Dashboard Analítico de Evento",
-      category: "fullstack backend frontend",
+      title: "Bio-A",
+      category: "fullstack mobile frontend",
       description:
-        "Dashboard analítico para acompanhamento das avaliações dos estandes gastronômicos da Festa Caiçara, usando a plataforma VemPraCa como ferramenta central.",
-      image: "/images/projects/dados.webp", // Troque para o caminho real da imagem
-      technologies: ["VemPraCa", "Next.js", "Supabase", "Chart.js", "Analytics"],
+        "Site institucional para empresa de design biofílico, com foco em composições vegetais para ambientes residenciais e corporativos. Interface moderna, responsiva e otimizada para performance.",
+      image: "/images/projects/bio-a.webp",
+      technologies: ["React", "Next.js", "Tailwind CSS", "Turbopack", "Vercel", "Priority Hints"],
       links: {
-        live: "https://vempracaapp.com/dashboard",
-        github: "https://github.com/gabe8135/VemPraCa",
+        live: "https://bio-a-orcin.vercel.app/",
+        github: "https://github.com/gabe8135/bio-a",
       },
-      featured: true,
+      featured: false,
       status: "Concluído",
     },
     {

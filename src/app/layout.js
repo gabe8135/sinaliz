@@ -1,17 +1,14 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Exo_2 } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
 import DeferredFooter from "./components/DeferredFooter";
 import SwRegister from "./components/SwRegister";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const exo2 = Exo_2({
+  variable: "--font-exo2",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -22,14 +19,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" className={exo2.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/images/favicon.png" />
         <link rel="apple-touch-icon" href="/images/favicon.png" />
         <meta name="theme-color" content="#12324A" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <Header />
         {children}
         <DeferredFooter />

@@ -1,0 +1,136 @@
+﻿
+=== hero.js ===
+  Line 205: [text-lg, text-xl]
+    <p className="text-[#B8CAD4] text-lg md:text-xl mb-4 font-medium">Olá! Eu sou</p>
+  Line 208: [text-4xl, text-6xl, text-7xl]
+    <h1 className="font-michroma text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+  Line 215: [text-3xl, text-4xl, text-xl]
+    <h2 className="text-xl md:text-3xl lg:text-4xl text-gray-300 mb-8 font-light">
+  Line 220: [text-lg, text-xl]
+    <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+  Line 235: [text-lg]
+    className="text-lg"
+  Line 245: [text-lg]
+    className="text-lg"
+  Line 279: [text-2xl]
+    <p className="text-2xl font-bold text-[#9FB3C0]">3+</p>
+  Line 280: [text-sm]
+    <p className="text-sm text-gray-400">Anos Experiência</p>
+  Line 283: [text-2xl]
+    <p className="text-2xl font-bold text-[#1F6B7A]">15+</p>
+  Line 284: [text-sm]
+    <p className="text-sm text-gray-400">Projetos Concluídos</p>
+  Line 287: [text-2xl]
+    <p className="text-2xl font-bold text-[#2F7D57]">100%</p>
+  Line 288: [text-sm]
+    <p className="text-sm text-gray-400">Satisfação</p>
+
+=== header.js ===
+  Line 105: [text-sm]
+    className={`px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-[#1F6B7A] hover:scale-105 ${
+  Line 187: [text-base]
+    className={`block w-full text-center px-3 py-2 text-base font-medium transition-all duration-300 hover:text-[#1F6B7A] transform hover:translate-x-2 ${
+
+=== about.js ===
+  Line 225: [text-sm]
+    <span className="inline-flex items-center rounded-full border border-[#2B3D51] bg-white/5 px-4 py-1.5 text-sm font-semibold text-[#D4E1EA] backdrop-blur-md">
+  Line 228: [text-xl]
+    <p className="mt-4 text-xl text-[#B8CAD4] max-w-2xl mx-auto">
+  Line 241: [text-2xl]
+    <h3 className="text-2xl font-bold text-white mb-6">
+  Line 266: [text-lg]
+    <div className="text-lg text-[#E6EEF4] font-semibold mb-2">
+  Line 269: [text-sm]
+    <div className="text-sm text-[#8FAABB]">
+  Line 275: [text-lg]
+    <div className="text-lg text-[#E6EEF4] font-semibold mb-2">
+  Line 278: [text-sm]
+    <div className="text-sm text-[#8FAABB]">
+  Line 322: [text-sm]
+    <p className="text-[#B5C6D2] text-sm">{feature.description}</p>
+  Line 357: [text-2xl]
+    <h3 className="text-2xl font-bold text-white text-center mb-10">Minhas Habilidades</h3>
+  Line 385: [text-base, text-lg]
+    <span className="text-[#E6EEF4] font-semibold text-base md:text-lg leading-tight block select-none">
+
+=== projects.js ===
+  Line 326: [text-3xl, text-4xl]
+    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Projetos</h2>
+  Line 327: [text-xl]
+    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+  Line 417: [text-sm]
+    <p className="text-sm font-semibold">Screenshot do projeto</p>
+  Line 427: [text-xs]
+    className={`px-3 py-1 text-xs rounded-full font-semibold shadow-md ring-1 ${
+  Line 440: [text-2xl, text-xl]
+    <h3 className="text-xl sm:text-2xl leading-tight font-bold text-[#E6EEF4] mb-2 min-h-[3rem]">
+  Line 444: [text-base]
+    <p className="mb-6 line-clamp-3 text-[15px] sm:text-base text-[#B5C6D2] leading-relaxed min-h-[4.5rem]">
+  Line 456: [text-sm, text-xs]
+    className="px-3 py-1.5 bg-gradient-to-r from-white/[0.12] to-white/[0.06] text-[#D7E5EE] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#32465A]"
+  Line 463: [text-sm, text-xs]
+    className="px-3 py-1.5 bg-gradient-to-r from-white/[0.12] via-white/[0.08] to-white/[0.04] text-[#D7E5EE] text-xs sm:text-sm rounded-full font-semibold shadow-sm border border-[#32465A] hover:border-[#5A8DA0] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1623]"
+  Line 473: [text-xs]
+    className="px-3 py-1.5 bg-gradient-to-r from-[#12324A]/55 via-[#1F6B7A]/50 to-[#0B1623]/70 text-[#E6EEF4] text-xs rounded-full font-bold shadow-sm border border-[#5A8DA0] hover:border-[#8FB0C0] transition flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6B7A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1623]"
+  Line 504: [text-sm]
+    className="sm:flex-1 text-sm shadow-[0_12px_28px_rgba(0,0,0,0.4)]"
+  Line 515: [text-sm]
+    className="sm:flex-1 text-sm !border-[#5A8DA0] !text-[#D4E1EA] hover:!bg-[#1F6B7A]/20 hover:!text-white"
+
+=== contact.js ===
+  Line 173: [text-3xl, text-4xl]
+    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+  Line 176: [text-xl]
+    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+  Line 200: [text-sm]
+    className={`relative z-10 flex-1 py-3 px-3 rounded-full font-semibold transition-all duration-500 ease-in-out text-sm ${
+  Line 210: [text-sm]
+    className={`relative z-10 flex-1 py-3 px-3 rounded-full font-semibold transition-all duration-500 ease-in-out text-sm ${
+  Line 233: [text-2xl]
+    <h3 className="text-2xl font-bold text-white mb-6">Envie uma Mensagem</h3>
+  Line 238: [text-sm]
+    <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
+  Line 255: [text-sm]
+    <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+  Line 272: [text-sm]
+    <label htmlFor="company" className="block text-sm font-medium text-white mb-2">
+  Line 288: [text-sm]
+    <label htmlFor="message" className="block text-sm font-medium text-white mb-2">
+  Line 338: [text-2xl]
+    <h3 className="text-2xl font-bold text-gray-900 mb-4">Outras Formas de Contato</h3>
+  Line 459: [text-2xl]
+    <h3 className="text-2xl font-bold text-white mb-2">Mensagem enviada!</h3>
+  Line 460: [text-base]
+    <p className="text-base text-[#D3DEE6] mb-6 text-center">
+  Line 481: [text-2xl]
+    <h3 className="text-2xl font-bold text-white mb-2">Erro ao enviar</h3>
+  Line 482: [text-base]
+    <p className="text-base text-[#D3DEE6] mb-6 text-center">
+
+=== footer.js ===
+  Line 232: [text-xl]
+    <h3 className="text-xl font-bold mb-4">Gabriel Ramos</h3>
+  Line 237: [text-sm]
+    <p className="text-gray-400 text-sm">
+  Line 247: [text-lg]
+    <h4 className="text-lg font-semibold mb-4">Navegação</h4>
+  Line 267: [text-lg]
+    <h4 className="text-lg font-semibold mb-4">Contato</h4>
+  Line 286: [text-sm]
+    <h5 className="text-sm font-semibold mb-3 text-gray-400">Redes Sociais</h5>
+  Line 312: [text-sm]
+    <p className="text-gray-400 text-sm">
+  Line 315: [text-xs]
+    <p className="text-gray-500 text-xs mt-2 md:mt-0">
+
+=== differentials.js ===
+  Line 109: [text-sm]
+    <span className="inline-flex items-center rounded-full border border-[#2B3D51] bg-white/5 px-4 py-1.5 text-sm font-semibold text-[#D4E1EA] backdrop-blur-md">
+  Line 112: [text-3xl, text-4xl]
+    <h2 className="mt-4 text-3xl md:text-4xl font-bold text-white">
+  Line 115: [text-lg]
+    <p className="mt-4 text-lg text-[#B8CAD4] max-w-3xl mx-auto">
+  Line 151: [text-lg]
+    <h3 className="text-lg font-semibold text-[#E6EEF4]">{item.title}</h3>
+  Line 154: [text-sm]
+    <p className="mt-4 flex-1 text-sm leading-relaxed text-[#B5C6D2]">
