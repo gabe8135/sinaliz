@@ -1,165 +1,10 @@
 "use client";
-import { useEffect, useRef } from "react";
 import Button from "./ui/Button";
 import ContactButton from "./ui/ContactButton";
+import MagicRings from "./ui/MagicRings";
 
 export default function Hero() {
-  const canvasRef = useRef(null);
   const isVisible = true;
-  // ...existing code...
-
-  // Efeito partículas interativas com canvas
-  useEffect(() => {
-    let frame = null;
-    let idleId = null;
-    let timeoutId = null;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobileView = window.matchMedia("(max-width: 767px)").matches;
-    const hasSaveData =
-      typeof navigator !== "undefined" &&
-      navigator.connection &&
-      navigator.connection.saveData === true;
-    const lowPowerDevice =
-      typeof navigator !== "undefined" &&
-      typeof navigator.hardwareConcurrency === "number" &&
-      navigator.hardwareConcurrency <= 4;
-
-    const skipCanvasAnimation =
-      prefersReducedMotion || (isMobileView && (hasSaveData || lowPowerDevice));
-
-    if (skipCanvasAnimation) {
-      const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#0B1623");
-      grad.addColorStop(1, "#12324A");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-      return;
-    }
-
-    // Parâmetros da galáxia
-    const STAR_COUNT = isMobileView ? 96 : 180;
-    const ARMS = 4;
-    const ARM_SPREAD = (Math.PI * 2) / ARMS;
-    const SPIRAL_TIGHTNESS = 0.12;
-    const STAR_COLORS = ["#ffffff", "#d9e2e8", "#a9bcc9", "#7e98a8", "#1f6b7a", "#9fb3c0"];
-    const targetFps = isMobileView ? 30 : 60;
-    const frameInterval = 1000 / targetFps;
-    let lastTs = 0;
-    let stars = [];
-
-    function createGalaxy() {
-      stars = [];
-      for (let i = 0; i < STAR_COUNT; i++) {
-        // Espalha por toda a tela, não só centro
-        const arm = i % ARMS;
-        const angle = arm * ARM_SPREAD + Math.random() * ARM_SPREAD;
-        // Espalha as estrelas por toda a tela
-        const maxRadius = Math.sqrt(width * width + height * height) / 2;
-        const distance = 40 + Math.random() * (maxRadius - 40);
-        const spiralAngle = angle + distance * SPIRAL_TIGHTNESS * (Math.random() * 0.7 + 0.7);
-        // Centro aleatório para espalhar
-        const centerX = width * (0.2 + 0.6 * Math.random());
-        const centerY = height * (0.2 + 0.6 * Math.random());
-        stars.push({
-          baseAngle: spiralAngle,
-          distance,
-          speed: 0.000045 + Math.random() * 0.00008, // Metade da velocidade anterior
-          size: 1.2 + Math.random() * 1.8,
-          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
-          twinkle: Math.random() * Math.PI * 2,
-          centerX,
-          centerY,
-        });
-      }
-    }
-
-    function loop(ts) {
-      if (ts - lastTs < frameInterval) {
-        frame = requestAnimationFrame(loop);
-        return;
-      }
-      lastTs = ts;
-
-      if (document.hidden) {
-        frame = requestAnimationFrame(loop);
-        return;
-      }
-
-      ctx.clearRect(0, 0, width, height);
-      // Fundo escuro espacial
-      ctx.save();
-      const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#0B1623"); // azul petróleo escuro
-      grad.addColorStop(1, "#12324A"); // navy institucional
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-      ctx.restore();
-
-      // Desenha estrelas em espiral espalhadas
-      for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
-        // Movimento orbital
-        const t = ts * star.speed + star.baseAngle;
-        const spiralRadius = star.distance * (1 + 0.08 * Math.sin(t * 0.2 + i));
-        const x = star.centerX + Math.cos(t) * spiralRadius;
-        const y = star.centerY + Math.sin(t) * spiralRadius * (0.98 + 0.04 * Math.cos(i));
-        // Twinkle
-        const twinkle = 0.7 + 0.5 * Math.sin(ts * 0.002 + star.twinkle);
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(x, y, star.size * twinkle, 0, Math.PI * 2, true);
-        ctx.fillStyle = star.color;
-        ctx.globalAlpha = 0.7 + 0.3 * twinkle;
-        ctx.shadowColor = star.color;
-        ctx.shadowBlur = 16;
-        ctx.fill();
-        ctx.restore();
-      }
-      frame = requestAnimationFrame(loop);
-    }
-
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      createGalaxy();
-    }
-
-    const startAnimation = () => {
-      createGalaxy();
-      loop(0);
-    };
-
-    window.addEventListener("resize", resize, { passive: true });
-
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(startAnimation, { timeout: 1200 });
-    } else {
-      timeoutId = window.setTimeout(startAnimation, 250);
-    }
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      if (idleId !== null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleId);
-      }
-      if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
-      }
-      if (frame !== null) {
-        cancelAnimationFrame(frame);
-      }
-    };
-  }, []);
 
   // Navegação suave entre seções usando scroll behavior
   const scrollToSection = (sectionId) => {
@@ -178,20 +23,37 @@ export default function Hero() {
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
-      {/* Canvas de partículas interativas */}
       {/* Background gradient customizado com overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1623] via-[#12324A] to-[#0F2234] z-0">
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
-      {/* Canvas de partículas interativas */}
-      <canvas
-        ref={canvasRef}
-        id="world"
-        className="absolute inset-0 w-full h-full block z-10"
-        style={{ pointerEvents: "none" }}
-      />
 
-      {/* Removido bloco de manchas animadas, agora o fundo é o canvas interativo */}
+      {/* MagicRings com a paleta de identidade do site (teal + azul-petróleo) */}
+      <div className="absolute inset-0 z-10" style={{ pointerEvents: "none" }}>
+        <MagicRings
+          color="#1f6b7a"
+          colorTwo="#9fb3c0"
+          ringCount={6}
+          speed={1}
+          attenuation={10}
+          lineThickness={2}
+          baseRadius={0.35}
+          radiusStep={0.1}
+          scaleRate={0.1}
+          opacity={0.8}
+          blur={0}
+          noiseAmount={0.1}
+          rotation={0}
+          ringGap={1.5}
+          fadeIn={0.7}
+          fadeOut={0.5}
+          followMouse={false}
+          mouseInfluence={0.2}
+          hoverScale={1.2}
+          parallax={0.05}
+          clickBurst={false}
+        />
+      </div>
 
       {/* Container principal responsivo */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 sm:mt-24">
