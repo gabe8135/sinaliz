@@ -205,8 +205,8 @@ export default function Hero() {
           <p className="text-[#B8CAD4] text-lg md:text-xl mb-4 font-medium">Olá! Eu sou</p>
 
           {/* Nome principal com gradient typography */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-            <span className="bg-gradient-to-r from-[#9FB3C0] to-[#5A8DA0] bg-clip-text text-transparent">
+          <h1 className="hero-name text-white mb-6">
+            <span className="bg-gradient-to-r from-[#E6EEF4] via-[#B8D3DF] to-[#6CA2B5] bg-clip-text text-transparent">
               Gabriel Ramos
             </span>
           </h1>
@@ -218,11 +218,9 @@ export default function Hero() {
 
           {/* Descrição das especialidades */}
           <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Transformo ideias em sites modernos, rápidos e fáceis de usar. Com experiência em
-            projetos digitais, ajudo empresas e profissionais a ter presença online de verdade, com
-            soluções sob medida, design funcional e tecnologia de ponta. Meu compromisso é entregar
-            sites que realmente funcionam para o seu negócio, sem promessas exageradas só trabalho
-            sério, transparente e eficiente.
+            Crio sites institucionais, landing pages e sistemas web sob medida para empresas e
+            profissionais. Combino design responsivo e desenvolvimento web para apresentar seus
+            serviços e conectar seu negócio a novos clientes.
           </p>
 
           {/* Botões de call-to-action */}

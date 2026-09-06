@@ -120,6 +120,28 @@ export default function Projects() {
       status: "Concluído",
     },
     {
+      id: 8,
+      title: "Armazém dos Musgos",
+      category: "frontend",
+      description:
+        "Site institucional com catálogo de musgos naturais para terrários, paisagismo e decoração. Design responsivo, apresentação de produtos e contato direto pelo WhatsApp.",
+      image: "/images/projects/armazem-dos-musgos.png",
+      technologies: [
+        "Next.js 16.2.12",
+        "React",
+        "PWA",
+        "Open Graph",
+        "Turbopack",
+        "Vercel",
+        "Priority Hints",
+      ],
+      links: {
+        live: "https://www.armazemdosmusgos.com.br/",
+      },
+      featured: false,
+      status: "Concluído",
+    },
+    {
       id: 3,
       title: "Landing Page",
       category: "frontend",
@@ -148,6 +170,7 @@ export default function Projects() {
     {
       id: 4,
       title: "Bio-A",
+      hidden: true,
       category: "fullstack mobile frontend",
       description:
         "Site institucional para empresa de design biofílico, com foco em composições vegetais para ambientes residenciais e corporativos. Interface moderna, responsiva e otimizada para performance.",
@@ -193,10 +216,10 @@ export default function Projects() {
   ];
 
   // Sistema de filtros para organizar projetos por categoria
-  const filteredProjects =
-    filter === "all"
-      ? projects
-      : projects.filter((project) => project.category.split(" ").includes(filter));
+  const filteredProjects = projects.filter(
+    (project) =>
+      !project.hidden && (filter === "all" || project.category.split(" ").includes(filter))
+  );
 
   // Visibilidade individual dos cards
   const [cardsVisible, setCardsVisible] = useState([]);

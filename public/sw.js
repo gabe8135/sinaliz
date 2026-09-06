@@ -1,4 +1,4 @@
-const CACHE_NAME = "webfolio-runtime-v5";
+const CACHE_NAME = "webfolio-runtime-v6";
 const CACHE_PREFIX = "webfolio-";
 const PRECACHE_URLS = ["/manifest.json", "/images/favicon.png", "/images/favicon.webp"];
 
@@ -49,6 +49,11 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  // Um worker previamente instalado pode controlar a aba até ela ser fechada.
+  // Em localhost ele nunca deve interceptar a prévia ou o Fast Refresh.
+  if (["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) return;
+  // Respostas parciais de vídeo devem manter o streaming nativo.
+  if (request.headers.has("range")) return;
 
   // Requisições de navegação sempre priorizam rede para evitar servir HTML antigo.
   if (request.mode === "navigate") {
@@ -58,7 +63,7 @@ self.addEventListener("fetch", (event) => {
         try {
           const fresh = await fetch(request, { cache: "no-store" });
           if (fresh && fresh.ok) {
-            cache.put(request, fresh.clone());
+            await cache.put(request, fresh.clone()).catch(() => {});
           }
           return fresh;
         } catch {
@@ -78,30 +83,21 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Para assets estáticos, usa stale-while-revalidate para manter performance.
+  // Assets com nomes fixos devem refletir alterações já na primeira visita online.
+  // O cache continua disponível como fallback offline.
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      const cached = await cache.match(request);
-
-      const networkPromise = fetch(request)
-        .then((response) => {
-          if (response && response.ok) {
-            cache.put(request, response.clone());
-          }
-          return response;
-        })
-        .catch(() => null);
-
-      if (cached) {
-        event.waitUntil(networkPromise);
-        return cached;
+      try {
+        const response = await fetch(request, { cache: "no-cache" });
+        if (response.ok) {
+          await cache.put(request, response.clone()).catch(() => {});
+        }
+        return response;
+      } catch {
+        const cached = await cache.match(request);
+        return cached || new Response(null, { status: 503, statusText: "Service Unavailable" });
       }
-
-      const networkResponse = await networkPromise;
-      if (networkResponse) return networkResponse;
-
-      return new Response(null, { status: 503, statusText: "Service Unavailable" });
     })()
   );
 });

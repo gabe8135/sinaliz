@@ -2,9 +2,11 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
+import { A11y, Autoplay, EffectCoverflow, Keyboard, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import { FiLayout, FiSmartphone } from "react-icons/fi";
 import {
   SiJavascript,
   SiReact,
@@ -62,10 +64,10 @@ export default function About() {
     { name: "Webpack", icon: SiWebpack },
     { name: "Vercel", icon: SiVercel },
     { name: "Netlify", icon: SiNetlify },
-    { name: "PWA", icon: SiJavascript },
+    { name: "PWA", icon: FiSmartphone },
     { name: "Google Analytics GA4", icon: SiGoogleanalytics },
     { name: "Google Tag Manager", icon: SiGoogletagmanager },
-    { name: "UX/UI Design", icon: SiRadixui },
+    { name: "UX/UI Design", icon: FiLayout },
     { name: "Git", icon: SiGit },
   ];
 
@@ -329,23 +331,81 @@ export default function About() {
       <div className="relative bg-[#050A12] py-16 border-t border-[#19293A] overflow-hidden">
         <style>{`
           .skills-swiper {
-            padding: 14px 0 22px;
+            padding: 24px 0 64px;
+            --swiper-navigation-color: #b8d3df;
+            --swiper-navigation-size: 16px;
           }
           .skills-swiper .swiper-slide {
-            width: clamp(200px, 22vw, 280px) !important;
+            width: clamp(220px, 24vw, 290px) !important;
           }
           @media (max-width: 640px) {
             .skills-swiper .swiper-slide {
-              width: 190px !important;
+              width: 220px !important;
             }
           }
           .skills-swiper .swiper-wrapper {
             align-items: center;
           }
+          .skills-swiper .skill-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 224px;
+            border: 1px solid #2a4053;
+            border-radius: 24px;
+            background: radial-gradient(ellipse at top, #1c3445 0%, #101d2b 65%);
+            box-shadow: inset 0 1px 0 #ffffff0d, 0 16px 32px #00000040;
+          }
+          .skills-swiper .skill-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7fb7c9, transparent);
+            opacity: 0.3;
+          }
+          .skills-swiper .skill-icon {
+            display: grid;
+            place-items: center;
+            width: 76px;
+            height: 76px;
+            border-radius: 22px;
+            color: #b8d3df;
+            border: 1px solid #47697e66;
+            background: linear-gradient(145deg, #6ca2b51f, #ffffff05);
+            box-shadow: inset 0 1px 0 #ffffff12;
+            transition: color 300ms, background 300ms;
+          }
           .skills-swiper .swiper-slide-active .skill-card {
-            border-color: rgba(90,141,160,0.75) !important;
-            box-shadow: 0 0 40px rgba(90,141,160,0.40), 0 12px 35px rgba(0,0,0,0.55) !important;
-            background: linear-gradient(135deg, rgba(90,141,160,0.18) 0%, rgba(255,255,255,0.07) 100%) !important;
+            border-color: #6798ae;
+            box-shadow: 0 16px 48px #1f6b7a30, inset 0 1px 0 #ffffff20;
+          }
+          .skills-swiper .swiper-slide-active .skill-card::before {
+            opacity: 1;
+          }
+          .skills-swiper .swiper-slide-active .skill-icon {
+            color: #e6f4fa;
+            background: linear-gradient(145deg, #2c576d, #183343);
+          }
+          .skills-swiper .swiper-button-prev,
+          .skills-swiper .swiper-button-next {
+            top: auto;
+            bottom: 0;
+            width: 38px;
+            height: 38px;
+            border: 1px solid #355468;
+            border-radius: 50%;
+            background: #102232;
+          }
+          .skills-swiper .swiper-button-prev { left: calc(50% - 46px); }
+          .skills-swiper .swiper-button-next { right: calc(50% - 46px); }
+          .skills-swiper .swiper-button-prev:hover,
+          .skills-swiper .swiper-button-next:hover { background: #23465a; }
+          .skills-swiper .swiper-button-prev svg,
+          .skills-swiper .swiper-button-next svg { width: 16px; height: 16px; }
+          @media (prefers-reduced-motion: reduce) {
+            .skills-swiper .swiper-wrapper { transition-duration: 0ms !important; }
           }
         `}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -363,25 +423,30 @@ export default function About() {
             centeredSlides
             slidesPerView="auto"
             loop
-            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: false }}
+            navigation
+            keyboard={{ enabled: true, onlyInViewport: true }}
+            a11y={{ prevSlideMessage: "Habilidade anterior", nextSlideMessage: "Próxima habilidade" }}
             speed={700}
             coverflowEffect={{
               rotate: 0,
-              stretch: -24,
-              depth: 260,
-              modifier: 1.6,
+              stretch: 0,
+              depth: 140,
+              modifier: 1,
               slideShadows: false,
             }}
-            modules={[EffectCoverflow, Autoplay]}
+            modules={[EffectCoverflow, Autoplay, Navigation, Keyboard, A11y]}
           >
             {skills.map((skill, i) => (
               <SwiperSlide key={i}>
-                <div className="skill-card min-h-[120px] rounded-2xl border border-[#2A3A4E] bg-gradient-to-br from-white/[0.09] via-white/[0.05] to-white/[0.03] backdrop-blur-xl px-7 py-8 text-center shadow-[0_8px_20px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-grab flex flex-col items-center justify-center gap-3">
+                <div className="skill-card px-6 py-8 text-center transition-all duration-300 cursor-grab flex flex-col items-center justify-center gap-5">
+                  <div className="skill-icon">
                   {skill.icon &&
                     createElement(skill.icon, {
-                      className: "w-10 h-10 md:w-12 md:h-12 mb-2",
+                      className: "w-9 h-9",
                       "aria-hidden": true,
                     })}
+                  </div>
                   <span className="text-[#E6EEF4] font-semibold text-base md:text-lg leading-tight block select-none">
                     {skill.name}
                   </span>

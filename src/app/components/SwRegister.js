@@ -18,7 +18,15 @@ export default function SwRegister() {
       navigator.serviceWorker
         .getRegistrations()
         .then((registrations) =>
-          Promise.all(registrations.map((registration) => registration.unregister()))
+          Promise.all(
+            registrations
+              .filter((registration) =>
+                [registration.active, registration.waiting, registration.installing].some(
+                  (worker) => worker && new URL(worker.scriptURL).pathname === "/sw.js"
+                )
+              )
+              .map((registration) => registration.unregister())
+          )
         )
         .catch(() => {});
       clearLegacyCaches().catch(() => {});
@@ -27,14 +35,7 @@ export default function SwRegister() {
 
     let idleId = null;
     let timeoutId = null;
-    let refreshing = false;
-
-    const onControllerChange = () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
-    };
-    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+    // Atualiza o worker em segundo plano, sem interromper animações ou formulários.
 
     const registerServiceWorker = async () => {
       try {
@@ -85,7 +86,6 @@ export default function SwRegister() {
         window.clearTimeout(timeoutId);
       }
       window.removeEventListener("beforeinstallprompt", beforeInstallPromptHandler);
-      navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
     };
   }, []);
 

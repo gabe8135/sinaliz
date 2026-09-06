@@ -29,6 +29,23 @@ html {
   font-family: var(--font-exo2), "Exo 2", sans-serif;
 }
 
+@font-face {
+  font-family: "Tilt Neon";
+  src: url("/fonts/tilt-neon.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.hero-name {
+  font-family: "Tilt Neon", sans-serif;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
