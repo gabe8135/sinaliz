@@ -1,8 +1,8 @@
-/* Impede rolagem horizontal indesejada */
+/* Usa a largura disponível, descontando a barra de rolagem vertical. */
 html, body, :root {
   overflow-x: hidden !important;
-  width: 100vw;
-  max-width: 100vw;
+  width: auto;
+  max-width: 100%;
 }
 @import "tailwindcss";
 

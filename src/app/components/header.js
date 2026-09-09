@@ -46,7 +46,7 @@ export default function Header() {
       style={{ overscrollBehavior: "contain" }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="relative flex justify-between items-center h-16">
           {/* Logo/Nome */}
           <div className="flex-shrink-0">
             <button
@@ -69,8 +69,8 @@ export default function Header() {
           </div>
 
           {/* Menu Desktop */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+          <div className="absolute left-1/2 -translate-x-1/2 hidden md:block">
+            <div className="grid grid-cols-3 items-center gap-8">
               {navItems.map((item) => (
                 <button
                   key={item.id}

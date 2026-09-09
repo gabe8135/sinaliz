@@ -1,12 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay, EffectCoverflow, Keyboard, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/navigation";
-import { FiLayout, FiSmartphone } from "react-icons/fi";
+import LogoLoop from "./LogoLoop";
+import { FiLayout } from "react-icons/fi";
 import {
   SiJavascript,
   SiReact,
@@ -16,13 +12,7 @@ import {
   SiPostgresql,
   SiGit,
   SiVercel,
-  SiNetlify,
-  SiWebpack,
-  SiFramer,
-  SiRadixui,
   SiSupabase,
-  SiGoogleanalytics,
-  SiGoogletagmanager,
 } from "react-icons/si";
 import { createElement } from "react";
 
@@ -57,16 +47,8 @@ export default function About() {
     { name: "Node.js", icon: SiNodedotjs },
     { name: "Supabase", icon: SiSupabase },
     { name: "PostgreSQL", icon: SiPostgresql },
-    { name: "SQL", icon: SiPostgresql },
     { name: "Tailwind CSS", icon: SiTailwindcss },
-    { name: "Radix UI", icon: SiRadixui },
-    { name: "Framer Motion", icon: SiFramer },
-    { name: "Webpack", icon: SiWebpack },
     { name: "Vercel", icon: SiVercel },
-    { name: "Netlify", icon: SiNetlify },
-    { name: "PWA", icon: FiSmartphone },
-    { name: "Google Analytics GA4", icon: SiGoogleanalytics },
-    { name: "Google Tag Manager", icon: SiGoogletagmanager },
     { name: "UX/UI Design", icon: FiLayout },
     { name: "Git", icon: SiGit },
   ];
@@ -327,133 +309,34 @@ export default function About() {
         </div>
       </div>
 
-      {/* Minhas Habilidades — Carrossel Coverflow */}
+      {/* Minhas Habilidades — loop contínuo de logos */}
       <div className="relative bg-[#050A12] py-16 border-t border-[#19293A] overflow-hidden">
-        <style>{`
-          .skills-swiper {
-            padding: 24px 0 64px;
-            --swiper-navigation-color: #b8d3df;
-            --swiper-navigation-size: 16px;
-          }
-          .skills-swiper .swiper-slide {
-            width: clamp(220px, 24vw, 290px) !important;
-          }
-          @media (max-width: 640px) {
-            .skills-swiper .swiper-slide {
-              width: 220px !important;
-            }
-          }
-          .skills-swiper .swiper-wrapper {
-            align-items: center;
-          }
-          .skills-swiper .skill-card {
-            position: relative;
-            overflow: hidden;
-            min-height: 224px;
-            border: 1px solid #2a4053;
-            border-radius: 24px;
-            background: radial-gradient(ellipse at top, #1c3445 0%, #101d2b 65%);
-            box-shadow: inset 0 1px 0 #ffffff0d, 0 16px 32px #00000040;
-          }
-          .skills-swiper .skill-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 20%;
-            right: 20%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #7fb7c9, transparent);
-            opacity: 0.3;
-          }
-          .skills-swiper .skill-icon {
-            display: grid;
-            place-items: center;
-            width: 76px;
-            height: 76px;
-            border-radius: 22px;
-            color: #b8d3df;
-            border: 1px solid #47697e66;
-            background: linear-gradient(145deg, #6ca2b51f, #ffffff05);
-            box-shadow: inset 0 1px 0 #ffffff12;
-            transition: color 300ms, background 300ms;
-          }
-          .skills-swiper .swiper-slide-active .skill-card {
-            border-color: #6798ae;
-            box-shadow: 0 16px 48px #1f6b7a30, inset 0 1px 0 #ffffff20;
-          }
-          .skills-swiper .swiper-slide-active .skill-card::before {
-            opacity: 1;
-          }
-          .skills-swiper .swiper-slide-active .skill-icon {
-            color: #e6f4fa;
-            background: linear-gradient(145deg, #2c576d, #183343);
-          }
-          .skills-swiper .swiper-button-prev,
-          .skills-swiper .swiper-button-next {
-            top: auto;
-            bottom: 0;
-            width: 38px;
-            height: 38px;
-            border: 1px solid #355468;
-            border-radius: 50%;
-            background: #102232;
-          }
-          .skills-swiper .swiper-button-prev { left: calc(50% - 46px); }
-          .skills-swiper .swiper-button-next { right: calc(50% - 46px); }
-          .skills-swiper .swiper-button-prev:hover,
-          .skills-swiper .swiper-button-next:hover { background: #23465a; }
-          .skills-swiper .swiper-button-prev svg,
-          .skills-swiper .swiper-button-next svg { width: 16px; height: 16px; }
-          @media (prefers-reduced-motion: reduce) {
-            .skills-swiper .swiper-wrapper { transition-duration: 0ms !important; }
-          }
-        `}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className={`transition-all duration-1000 delay-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
-          >
-            <h3 className="text-2xl font-bold text-white text-center mb-10">Minhas Habilidades</h3>
-          </div>
-          <Swiper
-            className="skills-swiper"
-            effect="coverflow"
-            grabCursor
-            centeredSlides
-            slidesPerView="auto"
-            loop
-            autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: false }}
-            navigation
-            keyboard={{ enabled: true, onlyInViewport: true }}
-            a11y={{ prevSlideMessage: "Habilidade anterior", nextSlideMessage: "Próxima habilidade" }}
-            speed={700}
-            coverflowEffect={{
-              rotate: 0,
-              stretch: 0,
-              depth: 140,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            modules={[EffectCoverflow, Autoplay, Navigation, Keyboard, A11y]}
-          >
-            {skills.map((skill, i) => (
-              <SwiperSlide key={i}>
-                <div className="skill-card px-6 py-8 text-center transition-all duration-300 cursor-grab flex flex-col items-center justify-center gap-5">
-                  <div className="skill-icon">
-                  {skill.icon &&
-                    createElement(skill.icon, {
-                      className: "w-9 h-9",
-                      "aria-hidden": true,
-                    })}
-                  </div>
-                  <span className="text-[#E6EEF4] font-semibold text-base md:text-lg leading-tight block select-none">
-                    {skill.name}
+          <h3 className="text-2xl font-bold text-white text-center mb-10">Minhas Habilidades</h3>
+          <div className="relative flex items-center min-h-[160px] overflow-hidden text-[#B8D3DF]">
+            <LogoLoop
+              logos={skills.map((skill) => ({
+                node: (
+                  <span className="flex w-32 shrink-0 flex-col items-center gap-4 text-center">
+                    {createElement(skill.icon, { className: "h-12 w-12", "aria-hidden": true })}
+                    <span className="text-sm font-medium whitespace-nowrap text-[#D7E5EE]">
+                      {skill.name}
+                    </span>
                   </span>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                ),
+                title: skill.name,
+              }))}
+              speed={40}
+              direction="left"
+              logoHeight={48}
+              gap={40}
+              hoverSpeed={0}
+              scaleOnHover
+              fadeOut
+              fadeOutColor="#050A12"
+              ariaLabel="Minhas habilidades e tecnologias"
+            />
+          </div>
         </div>
       </div>
     </section>
